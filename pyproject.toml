@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "radreportparser"
+version = "0.1.0"
+description = "Parse Radiology Report Text"
+authors = ["Lightbridge-KS <ki11ip0.s.a.s@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+markdownify = "^0.14.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
