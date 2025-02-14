@@ -1,4 +1,4 @@
-from radreportparser.pattern import _pattern_keys
+from radreportparser._pattern import _pattern_keys
 import re
 import pytest
 
