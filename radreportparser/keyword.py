@@ -23,12 +23,12 @@ class KeyWord(Enum):
             - Matches "Finalized Datetime"
             - Matches "Preliminary Datetime"
     Note:
-        - All patterns use non-word character matching (\\W*) which will match `[^a-zA-Z0-9_]`.
+        - All patterns use non-word and non-newline character matching (`[^\w\n]*`) to match any non-word characters before and after the keyword.
         - (s?) makes the 's' optional to match both singular and plural forms
     """
-    HISTORY = [r"\W*history\W*", r"\W*indication(s?)\W*", *[rf"\W*clinical\s+{h}\W*" for h in ["history", r"indication(s?)"]]]
-    TECHNIQUE = [r"\W*technique(s?)\W*"]
-    COMPARISON = [r"\W*comparison(s?)\W*"]
-    FINDINGS = [r"\W*Finding(s?)\W*"]
-    IMPRESSION = [r"\W*Impression(s?)\W*"]
-    FOOTER = [r"\W*Report Severity\W*", r"\W*Finalized Datetime\W*", r"\W*Preliminary Datetime\W*"]
+    HISTORY = [r"[^\w\n]*history[^\w\n]*", r"[^\w\n]*indication(s?)[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indication(s?)"]]]
+    TECHNIQUE = [r"[^\w\n]*technique(s?)[^\w\n]*"]
+    COMPARISON = [r"[^\w\n]*comparison(s?)[^\w\n]*"]
+    FINDINGS = [r"[^\w\n]*Finding(s?)[^\w\n]*"]
+    IMPRESSION = [r"[^\w\n]*Impression(s?)[^\w\n]*"]
+    FOOTER = [r"[^\w\n]*Report Severity[^\w\n]*", r"[^\w\n]*Finalized Datetime[^\w\n]*", r"[^\w\n]*Preliminary Datetime[^\w\n]*"]
