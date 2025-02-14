@@ -7,7 +7,7 @@ from ._pattern import _pattern_keys
 
 def _find_start_position(text: str, 
                         keys: list[str] | None,
-                        word_boundary: bool = True,
+                        word_boundary: bool = False,
                         flags: re.RegexFlag = re.IGNORECASE,
                         ) -> tuple[int, int]:
     """Helper function to find start position of the section"""
@@ -32,7 +32,7 @@ def _find_start_position(text: str,
 def _find_end_position_greedy(text: str, 
                             keys: list[str] | None, 
                             start_pos: int,
-                            word_boundary: bool = True,
+                            word_boundary: bool = False,
                             flags: re.RegexFlag = re.IGNORECASE,
                             ) -> int:
     """Find the end position of a section using greedy matching.
@@ -67,7 +67,7 @@ def _find_end_position_greedy(text: str,
 def _find_end_position_sequential(text: str, 
                                 keys: list[str] | None, 
                                 start_pos: int,
-                                word_boundary: bool = True,
+                                word_boundary: bool = False,
                                 flags: re.RegexFlag = re.IGNORECASE,
                                 ) -> int:
     """Find the end position of a section using sequential matching.
@@ -117,7 +117,7 @@ def extract_section(text: str,
                    start_keys: list[str] | None,
                    end_keys: list[str] | None,
                    include_start_keys: bool = False,
-                   word_boundary: bool = True,
+                   word_boundary: bool = False,
                    flags: re.RegexFlag = re.IGNORECASE,
                    match_strategy: Literal["greedy", "sequential"] = "greedy",
                    ) -> str | Literal[""]:
@@ -144,7 +144,7 @@ def extract_section(text: str,
         Default is True.
     word_boundary : bool, optional
         Whether to wrap word boundary `\b` around the `start_keys` and `end_keys`.
-        Default is True.
+        Default is False.
     flags : re.RegexFlag, optional
         Regex flags to use in pattern matching.
         Default is `re.IGNORECASE`.
@@ -165,7 +165,7 @@ def extract_section(text: str,
     'Normal.'
     """
     # Find start position    
-    start_idx_start, start_idx_end = _find_start_position(text, start_keys)
+    start_idx_start, start_idx_end = _find_start_position(text, start_keys, word_boundary=word_boundary, flags=flags)
     if start_idx_start == -1:  # No start match found
         return ""
     
@@ -175,9 +175,9 @@ def extract_section(text: str,
         raise ValueError(f"Invalid value: {match_strategy}. Must be one of: {', '.join(match_strategy_options)}")
     
     if match_strategy == "greedy":
-        end_idx = _find_end_position_greedy(text, end_keys, start_idx_start)
+        end_idx = _find_end_position_greedy(text, end_keys, start_idx_start, word_boundary=word_boundary, flags=flags)
     else:
-        end_idx = _find_end_position_sequential(text, end_keys, start_idx_start)
+        end_idx = _find_end_position_sequential(text, end_keys, start_idx_start, word_boundary=word_boundary, flags=flags)
     
     # Extract the section
     section_start = start_idx_start if include_start_keys else start_idx_end

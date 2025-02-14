@@ -8,7 +8,7 @@ from .section import extract_section
 
 @dataclass
 class SectionConfig:
-    """Configuration for a radiology report section.
+    """# Configuration for a radiology report section.
 
     Parameters
     ----------
@@ -26,48 +26,85 @@ class SectionConfig:
 
 
 class RadReportExtractor:
-    """# Extracting sections from radiology reports.
+    """# Extracts sections from radiology reports
 
-    This class provides methods to extract different sections commonly found in radiology
-    reports, such as history, technique, comparison, findings, and impression sections.
-    Each section is identified by specific keywords that can be customized during initialization.
+    This class provides methods to extract common sections from radiology reports, including:
+    - Title section
+    - History/Clinical indication
+    - Technique/Procedure details  
+    - Comparison with prior studies
+    - Findings/Description
+    - Impression/Conclusion
 
+    Each section is identified by customizable keywords that mark the start and end of sections.
+
+    Parameters
+    ----------
     keys_history : list[str], optional
-        List of keywords that identify the history section, defaults to KeyWord.HISTORY.value
-    keys_technique : list[str], optional
-        List of keywords that identify the technique section, defaults to KeyWord.TECHNIQUE.value
+        Keywords that identify the history/clinical section.
+        Default uses `KeyWord.HISTORY.value`
+    keys_technique : list[str], optional  
+        Keywords that identify the technique/procedure section.
+        Default uses `KeyWord.TECHNIQUE.value`
     keys_comparison : list[str], optional
-        List of keywords that identify the comparison section, defaults to KeyWord.COMPARISON.value
+        Keywords that identify the comparison section.
+        Default uses `KeyWord.COMPARISON.value`
     keys_findings : list[str], optional
-        List of keywords that identify the findings section, defaults to KeyWord.FINDINGS.value
+        Keywords that identify the findings section.
+        Default uses `KeyWord.FINDINGS.value`
     keys_impression : list[str], optional
-        List of keywords that identify the impression section, defaults to KeyWord.IMPRESSION.value
+        Keywords that identify the impression section.
+        Default uses `KeyWord.IMPRESSION.value`
     keys_footer : list[str], optional
-        List of keywords that identify the footer section, defaults to KeyWord.FOOTER.value
+        Keywords that identify report footer content.
+        Default uses `KeyWord.FOOTER.value`
+
     Methods
-    extract_history(text: str, include_key: bool = True, regex: bool = False, flags: re.RegexFlag = re.IGNORECASE) -> str
-        Extract the history section from the report text.
-    extract_technique(text: str, include_key: bool = True, regex: bool = False, flags: re.RegexFlag = re.IGNORECASE) -> str
-        Extract the technique section from the report text.
-    extract_comparison(text: str, include_key: bool = True, regex: bool = False, flags: re.RegexFlag = re.IGNORECASE) -> str
-        Extract the comparison section from the report text.
-    extract_findings(text: str, include_key: bool = True, regex: bool = False, flags: re.RegexFlag = re.IGNORECASE) -> str
-        Extract the findings section from the report text.
-    extract_impression(text: str, include_key: bool = True, regex: bool = False, flags: re.RegexFlag = re.IGNORECASE) -> str
-        Extract the impression section from the report text.
-    remove_footer()
-        Remove the footer section from the report text.
+    -------
+    extract_title(text, include_key=True, word_boundary=False)
+        Extract title section from start until first section marker
+    extract_history(text, include_key=True, word_boundary=False)
+        Extract clinical history/indication section
+    extract_technique(text, include_key=True, word_boundary=False)
+        Extract procedure technique section
+    extract_comparison(text, include_key=True, word_boundary=False)
+        Extract comparison with prior studies section
+    extract_findings(text, include_key=True, word_boundary=False)
+        Extract findings/description section
+    extract_impression(text, include_key=True, word_boundary=False)
+        Extract impression/conclusion section
+
     Examples
     --------
-    >>> parser = RadReportParser()
-    >>> text = '''HISTORY: Patient presents with chest pain
-    ... TECHNIQUE: CT scan with contrast
-    ... FINDINGS: Normal chest CT
-    ... IMPRESSION: No acute abnormality'''
-    >>> parser.extract_findings(text)
-    'FINDINGS: Normal chest CT'
-    """
+    Basic usage with default section markers:
 
+    ```python
+    extractor = RadReportExtractor()
+    text = '''
+    TECHNIQUE: CT scan with contrast
+    FINDINGS: Normal chest CT
+    IMPRESSION: No acute abnormality
+    '''
+    findings = extractor.extract_findings(text)
+    # Returns: 'FINDINGS: Normal chest CT'
+    ```
+
+    Custom section markers:
+
+    ```python
+    extractor = RadReportExtractor(
+        keys_findings=['DESCRIPTION:', 'FINDINGS:'],
+        keys_impression=['CONCLUSION:', 'IMPRESSION:']
+    )
+    ```
+
+    Notes
+    -----
+    - Section extraction is case-insensitive by default
+    - Returns empty string if section is not found
+    - Sections are extracted from their start marker until the next section marker
+    - The last matched section continues until end of text
+    """
     def __init__(
         self,
         keys_history: list[str] = KeyWord.HISTORY.value,
@@ -127,7 +164,7 @@ class RadReportExtractor:
         start_keys: list[str] | None,
         next_section_keys: list[str] | None,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -171,19 +208,11 @@ class RadReportExtractor:
         text: str,
         section_name: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
         """Extract a section by name from the radiology report text.
-
-        Parameters
-        ----------
-        text : str
-            The input radiology report text
-        section_name : str
-            Name of the section to extract
-        [other parameters as before]
         """
         config = self.section_configs.get(section_name)
         if not config:
@@ -203,7 +232,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -216,7 +245,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
@@ -243,7 +272,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -256,7 +285,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
@@ -283,7 +312,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -296,7 +325,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
@@ -323,7 +352,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -336,7 +365,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
@@ -363,7 +392,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -376,7 +405,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
@@ -403,7 +432,7 @@ class RadReportExtractor:
         self,
         text: str,
         include_key: bool = True,
-        word_boundary: bool = True,
+        word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
@@ -416,7 +445,7 @@ class RadReportExtractor:
         include_key : bool, optional
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
-            Whether to wrap word boundary `\b` around the section keys, by default True
+            Whether to wrap word boundary `\b` around the section keys, by default False
         flags : re.RegexFlag, optional
             Regex flags to use in pattern matching, by default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
