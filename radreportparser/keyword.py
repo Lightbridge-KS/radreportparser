@@ -26,9 +26,9 @@ class KeyWord(Enum):
         - All patterns use non-word and non-newline character matching (`[^\w\n]*`) to match any non-word characters before and after the keyword.
         - (s?) makes the 's' optional to match both singular and plural forms
     """
-    HISTORY = [r"[^\w\n]*history[^\w\n]*", r"[^\w\n]*indication(s?)[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indication(s?)"]]]
-    TECHNIQUE = [r"[^\w\n]*technique(s?)[^\w\n]*"]
-    COMPARISON = [r"[^\w\n]*comparison(s?)[^\w\n]*"]
+    HISTORY = [r"[^\w\n]*History[^\w\n]*", r"[^\w\n]*Indication(s?)[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indication(s?)"]]]
+    TECHNIQUE = [r"[^\w\n]*Technique(s?)[^\w\n]*"]
+    COMPARISON = [r"[^\w\n]*Comparison(s?)[^\w\n]*"]
     FINDINGS = [r"[^\w\n]*Finding(s?)[^\w\n]*"]
     IMPRESSION = [r"[^\w\n]*Impression(s?)[^\w\n]*"]
     FOOTER = [r"[^\w\n]*Report Severity[^\w\n]*", r"[^\w\n]*Finalized Datetime[^\w\n]*", r"[^\w\n]*Preliminary Datetime[^\w\n]*"]
