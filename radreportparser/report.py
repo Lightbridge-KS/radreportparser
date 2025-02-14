@@ -4,7 +4,7 @@ import json
 
 @dataclass
 class RadReport:
-    """A dataclass representing a radiology report with its various sections.
+    """# A dataclass representing a radiology report
 
     This class holds the different sections commonly found in radiology reports,
     including title, clinical history, technique, comparison with prior studies,
