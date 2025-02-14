@@ -1,5 +1,8 @@
 # TODO
 
-- Implement `extract_all()`
-- End key grouping
+
+## Done
+
+- [x] Implement `extract_all()`
+- [x] End key grouping
 
