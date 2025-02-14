@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import List, Optional, Literal
 
 from .keyword import KeyWord
+from .report import RadReport
 from .section import extract_section
 
 
@@ -31,7 +32,7 @@ class RadReportExtractor:
     This class provides methods to extract common sections from radiology reports, including:
     - Title section
     - History/Clinical indication
-    - Technique/Procedure details  
+    - Technique/Procedure details
     - Comparison with prior studies
     - Findings/Description
     - Impression/Conclusion
@@ -43,7 +44,7 @@ class RadReportExtractor:
     keys_history : list[str], optional
         Keywords that identify the history/clinical section.
         Default uses `KeyWord.HISTORY.value`
-    keys_technique : list[str], optional  
+    keys_technique : list[str], optional
         Keywords that identify the technique/procedure section.
         Default uses `KeyWord.TECHNIQUE.value`
     keys_comparison : list[str], optional
@@ -105,6 +106,7 @@ class RadReportExtractor:
     - Sections are extracted from their start marker until the next section marker
     - The last matched section continues until end of text
     """
+
     def __init__(
         self,
         keys_history: list[str] = KeyWord.HISTORY.value,
@@ -212,8 +214,7 @@ class RadReportExtractor:
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
-        """Extract a section by name from the radiology report text.
-        """
+        """Extract a section by name from the radiology report text."""
         config = self.section_configs.get(section_name)
         if not config:
             raise ValueError(f"Unknown section: {section_name}")
@@ -227,7 +228,75 @@ class RadReportExtractor:
             flags=flags,
             match_strategy=match_strategy,
         )
-        
+
+    def extract_all(
+        self,
+        text: str,
+        include_key: bool = False,
+        **kwargs,
+    ) -> RadReport:
+        """Extract all sections from the radiology report text.
+
+        This method extracts all available sections from the input text and
+        returns them in a RadReport object.
+
+        Parameters
+        ----------
+        text : str
+            The input radiology report text
+        **kwargs
+            Parameters passed to all child functions
+
+        Returns
+        -------
+        RadReport
+            A RadReport object containing all extracted sections
+
+        Examples
+        --------
+        >>> extractor = RadReportExtractor()
+        >>> text = '''
+        ... CT BRAIN
+        ... HISTORY: 25F with headache
+        ... FINDINGS: Normal
+        ... IMPRESSION: No acute abnormality
+        ... '''
+        >>> report = extractor.extract_all(text)
+        >>> print(report.history)
+        '25F with headache'
+        """
+        return RadReport(
+            title=self.extract_title(
+                text,
+                **kwargs,
+            ),
+            history=self.extract_history(
+                text,
+                include_key=include_key,
+                **kwargs,
+            ),
+            technique=self.extract_technique(
+                text,
+                include_key=include_key,
+                **kwargs,
+            ),
+            comparison=self.extract_comparison(
+                text,
+                include_key=include_key,
+                **kwargs,
+            ),
+            findings=self.extract_findings(
+                text,
+                include_key=include_key,
+                **kwargs,
+            ),
+            impression=self.extract_impression(
+                text,
+                include_key=include_key,
+                **kwargs,
+            ),
+        )
+
     def extract_title(
         self,
         text: str,
@@ -467,4 +536,3 @@ class RadReportExtractor:
             flags=flags,
             match_strategy=match_strategy,
         )
-
