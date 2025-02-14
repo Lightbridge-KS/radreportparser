@@ -26,7 +26,6 @@ class KeyWord(Enum):
         - All patterns use non-word character matching (\\W*) which will match `[^a-zA-Z0-9_]`.
         - (s?) makes the 's' optional to match both singular and plural forms
     """
-    
     HISTORY = [r"\W*history\W*", r"\W*indication(s?)\W*", *[rf"\W*clinical\s+{h}\W*" for h in ["history", r"indication(s?)"]]]
     TECHNIQUE = [r"\W*technique(s?)\W*"]
     COMPARISON = [r"\W*comparison(s?)\W*"]
