@@ -1,6 +1,7 @@
 import re
 import logging
 from typing import Literal
+from ._logging import logger
 from ._pattern import _pattern_keys
 
 ## Start Position
@@ -18,7 +19,7 @@ def _find_start_position(text: str,
         x = re.findall(key, text, flags)
         count = len(x)
         if count >= 2:
-            logging.warning("Start pattern `%s` appear %d times in text, only the first one will be matched.", key, count)
+            logger.warning("Start pattern `%s` appear %d times in text, only the first one will be matched.", key, count)
             
     start_match = _pattern_keys(keys, word_boundary, flags).search(text)
     if not start_match:
