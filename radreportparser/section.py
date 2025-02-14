@@ -121,7 +121,7 @@ def extract_section(text: str,
                    flags: re.RegexFlag = re.IGNORECASE,
                    match_strategy: Literal["greedy", "sequential"] = "greedy",
                    ) -> str | Literal[""]:
-    """Extract a section of text between specified start and end keys.
+    """# Extract a section of text between specified start and end keys.
 
     This function searches for a section of text that begins with any of the start keys
     and ends with any of the end keys. 
@@ -164,15 +164,15 @@ def extract_section(text: str,
     ...                match_strategy="sequential")
     'Normal.'
     """
-    # Find start position    
-    start_idx_start, start_idx_end = _find_start_position(text, start_keys, word_boundary=word_boundary, flags=flags)
-    if start_idx_start == -1:  # No start match found
-        return ""
-    
     # Find end position based on strategy
     match_strategy_options =  frozenset({"greedy", "sequential"})
     if match_strategy not in match_strategy_options:
         raise ValueError(f"Invalid value: {match_strategy}. Must be one of: {', '.join(match_strategy_options)}")
+    
+    # Find start position    
+    start_idx_start, start_idx_end = _find_start_position(text, start_keys, word_boundary=word_boundary, flags=flags)
+    if start_idx_start == -1:  # No start match found
+        return ""
     
     if match_strategy == "greedy":
         end_idx = _find_end_position_greedy(text, end_keys, start_idx_start, word_boundary=word_boundary, flags=flags)
