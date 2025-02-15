@@ -6,7 +6,8 @@
 <!-- badges: end -->
 
 
-The goal of `radreportparser` is to ...
+
+The goal of `radreportparser` is to extract text section from free-text radiology report using pattern regcognition based on regular expression. 
 
 ## Installation
 
@@ -17,4 +18,57 @@ python -m pip install git+https://github.com/Lightbridge-KS/radreportparser
 ```
 
 
-## Example
+## Usage
+
+
+```{python}
+report_text = """
+EMERGENCY MDCT OF THE BRAIN
+
+**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.
+
+TECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal reconstructions.
+
+*Comparison:* None.
+
+**Findings:**
+The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.
+
+**IMPRESSION**:
+- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
+"""
+```
+
+### Extract All
+
+Extract text section in radiology report and represented it in `RadReport()` object.
+
+```{python}
+from radreportparser import RadReportExtractor
+
+# Initilize the extractor with default config
+rre = RadReportExtractor()
+
+# Extract All Filds
+report = rre.extract_all(report_text)
+report
+```
+
+**Get text by sections:**
+
+```{python}
+# Get "history" section
+report.history
+```
+
+
+### Convert to Dictionary & JSON
+
+```{python}
+report.to_dict()
+```
+
+
+```{python}
+report.to_json()
+```

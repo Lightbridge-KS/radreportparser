@@ -1,7 +1,9 @@
-# Get Started
+# Get Started with RadReportParser
 
 
 
-### Linking
+## Installation
 
-<!-- [extract_all](`radreportparser.RadReportExtractor.extract_all`) -->
+
+## Extract Radiology Report
+
