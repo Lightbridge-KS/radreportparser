@@ -64,7 +64,9 @@ quartodoc:
       desc: "Class to represent radiology report"
       contents:
       - RadReport
-    - title: Report Extractor
+    # Extract
+    - title: Extract
+    - subtitle: Report Extractor
       desc: "Extract fields from radiology report"
       package: radreportparser.RadReportExtractor
       contents:
@@ -75,7 +77,7 @@ quartodoc:
       - extract_comparison
       - extract_findings
       - extract_impression
-    - title: Section Extractor
+    - subtitle: Section Extractor
       desc: "Extract text based on section start & end keywords"
       contents:
       - extract_section

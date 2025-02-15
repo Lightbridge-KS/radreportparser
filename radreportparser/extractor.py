@@ -9,7 +9,7 @@ from .section import extract_section
 
 @dataclass
 class SectionConfig:
-    """Configuration for a radiology report section.
+    """# Configuration for a radiology report section.
 
     Parameters
     ----------
@@ -32,7 +32,7 @@ class RadReportExtractor:
     This class provides methods to extract common sections from radiology reports, including:
     - Title section
     - History/Clinical indication
-    - Technique/Procedure details
+    - Technique/Procedure details  
     - Comparison with prior studies
     - Findings/Description
     - Impression/Conclusion
@@ -44,7 +44,7 @@ class RadReportExtractor:
     keys_history : list[str], optional
         Keywords that identify the history/clinical section.
         Default uses `KeyWord.HISTORY.value`
-    keys_technique : list[str], optional
+    keys_technique : list[str], optional  
         Keywords that identify the technique/procedure section.
         Default uses `KeyWord.TECHNIQUE.value`
     keys_comparison : list[str], optional
@@ -79,7 +79,7 @@ class RadReportExtractor:
     --------
     Basic usage with default section markers:
 
-    ```python
+    ```{python}
     extractor = RadReportExtractor()
     text = '''
     TECHNIQUE: CT scan with contrast
@@ -87,16 +87,17 @@ class RadReportExtractor:
     IMPRESSION: No acute abnormality
     '''
     findings = extractor.extract_findings(text)
-    # Returns: 'FINDINGS: Normal chest CT'
+    findings
     ```
 
     Custom section markers:
 
-    ```python
+    ```{python}
     extractor = RadReportExtractor(
         keys_findings=['DESCRIPTION:', 'FINDINGS:'],
         keys_impression=['CONCLUSION:', 'IMPRESSION:']
     )
+    extractor
     ```
 
     Notes
@@ -106,7 +107,6 @@ class RadReportExtractor:
     - Sections are extracted from their start marker until the next section marker
     - The last matched section continues until end of text
     """
-
     def __init__(
         self,
         keys_history: list[str] = KeyWord.HISTORY.value,
@@ -214,7 +214,8 @@ class RadReportExtractor:
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
     ) -> str:
-        """Extract a section by name from the radiology report text."""
+        """Extract a section by name from the radiology report text.
+        """
         config = self.section_configs.get(section_name)
         if not config:
             raise ValueError(f"Unknown section: {section_name}")
@@ -237,13 +238,15 @@ class RadReportExtractor:
     ) -> RadReport:
         """Extract all sections from the radiology report text.
 
-        This is the top-level method for the `RadReportExtractor()` class. It extracts all available sections from the input text and
-        returns them in a `RadReport()` object.
+        This is the top-level method for the `RadReportExtractor()` class. It extracts all available sections 
+        from the input text and returns them in a `RadReport()` object.
 
         Parameters
         ----------
         text : str
             The input radiology report text
+        include_key : bool, optional
+            Whether to include section keys in output, by default False
         **kwargs
             Parameters passed to all child functions
 
@@ -254,16 +257,78 @@ class RadReportExtractor:
 
         Examples
         --------
-        >>> extractor = RadReportExtractor()
-        >>> text = '''
-        ... CT BRAIN
-        ... HISTORY: 25F with headache
-        ... FINDINGS: Normal
-        ... IMPRESSION: No acute abnormality
-        ... '''
-        >>> report = extractor.extract_all(text)
-        >>> print(report.history)
-        '25F with headache'
+        
+        ```{python}
+        from radreportparser import RadReportExtractor
+        
+        extractor = RadReportExtractor()
+        
+        text = '''
+        EMERGENCY MDCT OF THE BRAIN
+
+        HISTORY: 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.
+
+        TECHNIQUE: Axial helical scan of the brain performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.
+
+        COMPARISON: None.
+
+        FINDINGS:
+        Cerebral parenchyma: Age-appropriate brain volume with normal parenchymal attenuation and gray-white differentiation. No acute large territorial infarction or intraparenchymal hemorrhage identified.
+
+        Cerebellum and posterior fossa: Normal.
+
+        Extraaxial spaces: No extra-axial collection.
+
+        Ventricles: Normal size. No intraventricular hemorrhage.
+
+        Midline shift: None.
+
+        Brain herniation: None.
+
+        Vascular system: Normal.
+
+        Calvarium and scalp: No fracture identified.
+
+        Skull base, sella and temporomandibular joints (TMJs): Normal.
+
+        Visualized orbits, paranasal sinuses and mastoid air cells: Unremarkable.
+
+        Visualized upper cervical spine: No fracture identified.
+
+        IMPRESSION:
+        - No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
+        '''
+        
+        report = extractor.extract_all(text)
+        report
+        ```
+        
+        ### Report by Element
+
+        
+        ```{python}
+        report.title
+        ```
+        
+        ```{python}
+        report.history
+        ```
+        
+        ```{python}
+        report.impression
+        ```
+        
+        ### Convert to dictionary
+        
+        ```{python}
+        report.to_dict()
+        ```
+        
+        ### Convert to JSON
+        
+        ```{python}
+        report.to_json()
+        ```
         """
         return RadReport(
             title=self.extract_title(
@@ -296,7 +361,6 @@ class RadReportExtractor:
                 **kwargs,
             ),
         )
-
     def extract_title(
         self,
         text: str,
@@ -536,3 +600,4 @@ class RadReportExtractor:
             flags=flags,
             match_strategy=match_strategy,
         )
+

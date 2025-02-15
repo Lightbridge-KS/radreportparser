@@ -158,12 +158,14 @@ def extract_section(text: str,
     
     Examples
     --------
-    >>> text = "FINDINGS: Normal. TECHNIQUE: MRI. IMPRESSION: Clear."
-    >>> # Using sequential matching
-    >>> extract_section(text, ["FINDINGS:"], 
-    ...                ["TECHNIQUE:", "IMPRESSION:"],
-    ...                match_strategy="sequential")
-    'Normal.'
+    ```{python}
+    from radreportparser import extract_section
+    text = "FINDINGS: Normal. TECHNIQUE: MRI. IMPRESSION: Clear."
+    # Using sequential matching
+    extract_section(text, ["FINDINGS:"], 
+                   ["TECHNIQUE:", "IMPRESSION:"],
+                   match_strategy="sequential")
+    ```
     """
     # Find end position based on strategy
     match_strategy_options =  frozenset({"greedy", "sequential"})
