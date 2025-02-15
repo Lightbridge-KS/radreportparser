@@ -1,5 +1,14 @@
-/_build/
-*.DS_Store
+# Doc
+/.quarto/
+/docs/site/*
+docs/source/reference
+
+# VS Code
+.vscode/
+
+# Mac specific
+.DS_Store
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
