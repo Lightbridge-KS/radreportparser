@@ -1,0 +1,97 @@
+project:
+  type: website
+  output-dir: _site
+
+
+website:
+  title: "RadReportParser"
+  description: "Parse & Structure Radiology Report"
+  page-navigation: true
+  # favicon: "favicon.ico"
+  navbar:
+    background: primary
+    # logo: logo.png
+    pinned: true
+    search: true
+    left:
+      # - text: "Home"
+      #   href: index.qmd
+      - text: "Get started"
+        file: get_started.qmd
+      - text: "Reference"
+        href: reference/index.qmd
+      # - text: Learn more
+      #   menu:
+      #     - text: "Create consistent metadata for pins"
+      #       file: customize-pins-metadata.qmd
+      #     - text: "pins for R"
+      #       href: https://pins.rstudio.com
+      #       target: _blank
+    right:
+      - icon: github
+        href: https://github.com/Lightbridge-KS/radreportparser
+        aria-label: GitHub
+    sidebar:
+      - id: reference
+        contents: "_sidebar.yml"
+
+# # tell quarto to read the generated sidebar
+metadata-files:
+  - _sidebar.yml
+
+# tell quarto to read the generated styles
+# format:
+#   css:
+#     - api/_styles-quartodoc.css
+
+
+quartodoc:
+  # the name used to import the package you want to create reference docs for
+  package: radreportparser
+  style: pkgdown
+  dir: reference
+  # write sidebar and style data
+  sidebar: _sidebar.yml
+  # css: api/_styles-quartodoc.css
+  renderer:
+    style: markdown
+    # table_style: description-list
+    show_signature_annotations: true
+    display_name: relative
+
+  sections:
+    - title: Report Class
+      desc: "Class to represent radiology report"
+      contents:
+      - RadReport
+    - title: Report Extractor
+      desc: "Extract fields from radiology report"
+      package: radreportparser.RadReportExtractor
+      contents:
+      - extract_all
+      - extract_title
+      - extract_history
+      - extract_technique
+      - extract_comparison
+      - extract_findings
+      - extract_impression
+    - title: Section Extractor
+      desc: "Extract text based on section start & end keywords"
+      contents:
+      - extract_section
+
+filters:
+  - interlinks
+
+interlinks:
+  sources: {}
+
+profile:
+  default: latest
+
+format:
+  html:
+    theme:
+      - flatly
+    css:
+      - _styles-quartodoc.css

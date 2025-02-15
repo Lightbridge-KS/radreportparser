@@ -122,7 +122,7 @@ def extract_section(text: str,
                    flags: re.RegexFlag = re.IGNORECASE,
                    match_strategy: Literal["greedy", "sequential"] = "greedy",
                    ) -> str | Literal[""]:
-    """# Extract a section of text between specified start and end keys.
+    """Extract a section of text between keys.
 
     This function searches for a section of text that begins with any of the start keys
     and ends with any of the end keys. 

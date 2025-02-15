@@ -9,7 +9,7 @@ from .section import extract_section
 
 @dataclass
 class SectionConfig:
-    """# Configuration for a radiology report section.
+    """Configuration for a radiology report section.
 
     Parameters
     ----------
@@ -237,8 +237,8 @@ class RadReportExtractor:
     ) -> RadReport:
         """Extract all sections from the radiology report text.
 
-        This method extracts all available sections from the input text and
-        returns them in a RadReport object.
+        This is the top-level method for the `RadReportExtractor()` class. It extracts all available sections from the input text and
+        returns them in a `RadReport()` object.
 
         Parameters
         ----------

@@ -4,17 +4,25 @@
 # Help target - lists available commands
 help:
 	@echo "Available commands:"
-	@echo "  docs    - Build Docs"
-	@echo "  docs-preview    - Preview Docs"
 
-docs doc documentation:
+# Install in editable mode
+install-edit: 
+	python -m pip install -e .
+
+# Doc in CI environment
+docs-ci: 
 	$(MAKE) -C docs docs
 
-doc-preview docs-preview:
+# Doc in interative environment
+docs doc documentation: install-edit
+	$(MAKE) -C docs docs
+
+# Quarto Preview
+preview: docs
 	cd docs && quarto preview
 
 build-pkg:
 	python -m build
 
 # Mark targets that don't create files
-.PHONY: help docs docs-serve build-pkg
+.PHONY: help docs docs-ci install-edit preview build-pkg
