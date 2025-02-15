@@ -2,26 +2,41 @@
 
 <!-- badges: start -->
 
-
 <!-- badges: end -->
 
+::: {.callout-tip appearance="minimal" collapse="false"}
+**Parse and extract key sections from radiology reports text**
+:::
 
 
-The goal of `radreportparser` is to extract text section from free-text radiology report using pattern regcognition based on regular expression. 
+`radreportparser` is a Python package that helps you extract structured information from free-text radiology reports using regular expressions.
+
+
+## Key Features
+
+- 📋 Extract common radiology report sections 
+  - Included: Title, History, Technique, Comparison, Findings, and Impression
+- 🔍 Flexible pattern matching with customizable section markers
+- 🔄 Convert extracted sections to Python dictionaries or JSON
 
 ## Installation
 
-You can install the development version from [GitHub](https://github.com/Lightbridge-KS/radreportparser) with:
+Install the development version from GitHub:
 
-```python
+```bash
 python -m pip install git+https://github.com/Lightbridge-KS/radreportparser
 ```
 
+## Quick Start
 
-## Usage
+### Extract Report
 
+Here's a simple example of extracting sections from a radiology report:
 
 ```{python}
+from radreportparser import RadReportExtractor
+
+# Sample brain CT report (note the markdown formatting)
 report_text = """
 EMERGENCY MDCT OF THE BRAIN
 
@@ -31,44 +46,43 @@ TECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal r
 
 *Comparison:* None.
 
-**Findings:**
+Findings:
 The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.
 
 **IMPRESSION**:
 - No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
 """
-```
 
-### Extract All
-
-Extract text section in radiology report and represented it in `RadReport()` object.
-
-```{python}
-from radreportparser import RadReportExtractor
-
-# Initilize the extractor with default config
-rre = RadReportExtractor()
-
-# Extract All Filds
-report = rre.extract_all(report_text)
+# Initialize extractor and parse the report
+extractor = RadReportExtractor()
+report = extractor.extract_all(report_text)
 report
 ```
 
-**Get text by sections:**
+**Access individual sections:**
 
 ```{python}
-# Get "history" section
-report.history
+print(report.history)
 ```
 
 
-### Convert to Dictionary & JSON
+### Convert to dictionary or JSON
 
 ```{python}
 report.to_dict()
 ```
 
-
 ```{python}
 report.to_json()
 ```
+
+::: {.callout-note appearance="default" collapse="false"}
+The pattern matching mechanism can extract sections from text with plain text or markdown formatting. 
+:::
+
+
+
+## Learn More
+
+- Check out our [Getting Started Guide](get_started.qmd) for a detailed tutorial
+- Browse the [Reference](reference/index.qmd) for detailed function documentation
