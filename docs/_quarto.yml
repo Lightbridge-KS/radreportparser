@@ -64,6 +64,11 @@ quartodoc:
       desc: "Class to represent radiology report"
       contents:
       - RadReport
+    # KeyWord
+    - title: Section Keyword
+      desc: "Keyword to mark the beginning of section"
+      contents:
+      - KeyWord
     # Extract
     - title: Extract
     - subtitle: Report Extractor
@@ -81,6 +86,8 @@ quartodoc:
       desc: "Extract text based on section start & end keywords"
       contents:
       - extract_section
+    
+
 
 filters:
   - interlinks
@@ -98,3 +105,4 @@ format:
     css:
       - _styles-quartodoc.css
     toc: true
+    toc-depth: 4

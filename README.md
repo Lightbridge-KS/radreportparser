@@ -4,30 +4,28 @@
 
 <!-- badges: end -->
 
-::: {.callout-tip appearance="minimal" collapse="false"}
-**Parse and extract key sections from radiology reports text**
-:::
+
+> **Parse and extract key sections from radiology reports text**
 
 `radreportparser` is a Python package that helps you extract structured information from free-text radiology reports using regular expressions.
 
-::: {.callout-caution appearance="simple"}
-This package is in early development phase and subject to change.
-:::
 
-## Features
+- **Package website:** <https://lightbridge-ks.github.io/radreportparser/>
 
--   📋 Extract common radiology report sections [^1]
-    -   Included: Title, History, Technique, Comparison, Findings, and Impression
--   🔍 Flexible pattern matching with customizable section markers
--   🔄 Convert extracted sections to Python dictionaries or JSON
 
-[^1]: The "common" radiology report section were based on author experience in our institution. 
+
+## Key Features
+
+- 📋 Extract common radiology report sections 
+  - Included: Title, History, Technique, Comparison, Findings, and Impression
+- 🔍 Flexible pattern matching with customizable section markers
+- 🔄 Convert extracted sections to Python dictionaries or JSON
 
 ## Installation
 
 Install the development version from GitHub:
 
-``` bash
+```bash
 python -m pip install git+https://github.com/Lightbridge-KS/radreportparser
 ```
 
@@ -37,7 +35,7 @@ python -m pip install git+https://github.com/Lightbridge-KS/radreportparser
 
 Here's a simple example of extracting sections from a radiology report:
 
-```{python}
+```python
 from radreportparser import RadReportExtractor
 
 # Sample brain CT report (note the markdown formatting)
@@ -51,11 +49,9 @@ TECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal r
 *Comparison:* None.
 
 Findings:
-
 The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.
 
-=== IMPRESSION ===
-
+**IMPRESSION**:
 - No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
 """
 
@@ -67,25 +63,21 @@ report
 
 **Access individual sections:**
 
-```{python}
+```python
 print(report.history)
 ```
 
+
 ### Convert to dictionary or JSON
 
-```{python}
+```python
 report.to_dict()
 ```
 
-```{python}
-print(report.to_json(indent = 2)) # pretty-printed
+```python
+report.to_json()
 ```
 
-::: {.callout-note appearance="default" collapse="false"}
-The pattern matching mechanism can extract sections from text with plain text or markdown formatting.
-:::
 
-## Learn More
+**Note:** The pattern matching mechanism can extract sections from text with plain text or markdown formatting. 
 
--   Check out our [Getting Started Guide](get_started.qmd) for a detailed tutorial
--   Browse the [Reference](reference/index.qmd) for detailed function documentation

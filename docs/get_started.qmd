@@ -1,9 +1,436 @@
 # Get Started with RadReportParser
 
 
+## Anatomy of Radiology Report
 
-## Installation
+Understanding the structure of radiology reports is essential for effective text extraction. This section explains how `radreportparser` models and processes radiology report text.
 
 
-## Extract Radiology Report
+### Report Structure
+
+A radiology report typically consists of several distinct sections, each serving a specific purpose in communicating the radiological findings. `radreportparser` uses a section-based parsing approach, where:
+
+1. Each section is identified by a **section keyword** (e.g., "HISTORY:", "FINDINGS:")
+2. Section content extends from its keyword until the next section keyword
+3. Sections are non-overlapping and sequential
+
+The typical section of radiology report [^1] follows the structure in @fig-report-anatomy:
+
+[^1]: According to the experience of an author of this package.
+
+![Radiology Report Anatomy](./img/report-anatomy.png){#fig-report-anatomy width="80%"}
+
+::: {.callout-note appearance="default"}
+Section order can vary between institutions and report types. `radreportparser` is designed to handle flexible section ordering.
+:::
+
+### Radiology Report Data Model
+
+`radreportparser` uses the [`RadReport`](`radreportparser.RadReport`) dataclass to represent structured report data. This class provides:
+
+- Type-safe section storage
+- Easy access to individual sections
+- Conversion to standard data formats
+
+Here's an example of working with the `RadReport` class:
+
+```{python}
+from radreportparser import RadReport
+
+# Create a RadReport instance
+report = RadReport(
+    title="EMERGENCY MDCT OF THE BRAIN",
+    history="A 25-year-old female presents with headache...",
+    technique="Axial helical scan of the brain...",
+    findings="The brain shows age-appropriate volume...",
+    impression="No intracranial hemorrhage..."
+)
+
+# Display the report object
+report
+```
+
+**Each section can be accessed as an attribute:**
+
+```{python}
+report.title
+```
+
+```{python}
+# Sections that weren't specified return None
+type(report.comparison)
+```
+
+The [`RadReport`](`radreportparser.RadReport`) class supports serialization to both Python dictionaries and JSON format:
+
+**Convert to python dictonary:** 
+
+```{python}
+report.to_dict()
+```
+
+**Convert to JSON object:**
+
+```{python}
+print(report.to_json(indent = 2))
+```
+
+::::{.callout-tip collapse="false"}
+Use `to_dict(exclude_none=True)` or `to_json(exclude_none=True)` to omit empty sections from the output.
+::::
+
+## Extract Report
+
+The [`RadReportExtractor`](`radreportparser.RadReportExtractor`) class provides high-level methods for extracting structured sections from radiology report text. Let's walk through the extraction process using a sample report:
+
+
+```{python}
+# Sample brain CT report (with markdown formatting)
+report_text = """
+EMERGENCY MDCT OF THE BRAIN
+
+**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.
+
+TECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal reconstructions.
+
+*Comparison:* None.
+
+Findings:
+
+The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.
+
+=== IMPRESSION ===
+
+- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
+"""
+```
+
+
+### Initializing the Extractor
+
+Before extracting sections, we need to initialize a [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) instance:
+
+```{python}
+from radreportparser import RadReportExtractor
+
+# Initialize extractor with default configuration
+extractor = RadReportExtractor()
+```
+
+
+The [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) uses **section keywords** to identify the start of each section. These keywords are defined as regular expressions and can be customized during initialization using the `keys_*` parameters. 
+
+The default keywords are defined in the `KeyWord` enum:
+
+```{python}
+from radreportparser import KeyWord
+
+# Example: inspect default keywords for the history section
+KeyWord.HISTORY.value
+```
+
+
+### Extract All Sections
+
+The [`extract_all()`](`radreportparser.RadReportExtractor.extract_all`) method provides a convenient way to extract all sections at once. It returns a [`RadReport`](`radreportparser.RadReport`) instance containing the structured data:
+
+```{python}
+# Extract all sections from the report
+report = extractor.extract_all(report_text)
+report
+```
+
+The extracted sections can be accessed individually:
+
+```{python}
+# Access specific sections
+print("Title:", report.title)
+print("\nHistory:", report.history)
+```
+
+The `RadReport` instance can be easily converted to standard data formats:
+
+```{python}
+# Convert to Python dictionary
+report.to_dict()
+```
+
+```{python}
+# Convert to JSON (pretty-printed)
+print(report.to_json(indent = 2))
+```
+
+::::{.callout-tip collapse="false"}
+The `extract_all()` method accepts these parameters:
+
+- `include_key`: Whether to include section keywords in output (default: `False`)
+- `word_boundary`: Whether to use word boundaries in pattern matching (default: `False`)
+::::
+
+
+### Extract Individual Section 
+
+You can also extract specific sections using individual methods like `extract_history()`, `extract_findings()`, etc. These methods provide more control over extraction parameters.
+
+For example, to extract just the history section:
+
+```{python}
+# Include section keyword (default)
+extractor.extract_history(report_text)
+```
+
+#### Keyword Inclusion
+
+You can control whether the section keyword is included in the output using the `include_key` parameter. 
+
+```{python}
+# Exclude section Keyword
+extractor.extract_history(report_text, include_key=False)
+```
+
+#### Match Strategy
+
+The `match_strategy` parameter controls how **"next section keyword"** of each section boundaries are determined.
+
+```{python}
+# Sample report with ambiguous sections
+report_reversed = """
+HISTORY: Patient with cough 2 days ago
+IMPRESSION: Unremarkable
+FINDINGS: Normal findings
+"""
+```
+
+**"greedy" strategy** (default)
+
+- This stretegy mark the ending of each section by reaching **any** of the "next section keywords". 
+
+```{python}
+extractor.extract_history(report_reversed, match_strategy="greedy")
+```
+
+**'sequential' strategy** 
+
+- This stretegy mark the ending of each section by checking each "next section keywords" list **sequentially**. 
+
+```{python}
+extractor.extract_history(report_reversed, match_strategy="sequential")
+```
+
+Since the keywords for "KeyWord.FINDINGS" comes before that of `KeyWord.IMPRESSION`, the end of "history" section would terminate just before the "KeyWord.FINDINGS" matched. 
+
+### Manually Configure Section Keywords
+
+You can customize the [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) to match different report formats by providing your own section keywords. This is particularly useful when working with institution-specific report templates.
+
+Here's an example using a chest radiograph report format:
+
+```{python}
+# Sample chest X-ray report
+chest_xray_text = """
+CHEST RADIOGRAPH
+
+CLINICAL INFORMATION: 65-year-old with productive cough
+
+PROCEDURE: PA and lateral chest radiograph
+
+DESCRIPTION:
+- Clear lung fields bilaterally
+- Normal cardiac silhouette
+- No pleural effusion
+
+CONCLUSION:
+1. Normal chest radiograph
+"""
+
+# Custom section keywords for chest X-ray reports
+extractor_custom = RadReportExtractor(
+    keys_history=["CLINICAL INFORMATION:", "INDICATION:"],
+    keys_technique=["PROCEDURE:", "EXAMINATION:"],
+    keys_findings=["FINDINGS:", "DESCRIPTION:"],
+    keys_impression=["CONCLUSION:", "IMPRESSION:"]
+)
+
+# Extract sections using custom configuration
+chest_report = extractor_custom.extract_all(chest_xray_text)
+chest_report
+```
+
+```{python}
+chest_report.history
+```
+
+```{python}
+chest_report.impression
+```
+
+
+::::{.callout-tip collapse="false"}
+When configuring custom keywords:
+
+- Use variations of section headers commonly seen in your reports
+- Order keywords from most to least specific for better matching
+- Remember that matching is case-insensitive by default
+::::
+
+
+## Extract Section
+
+While the [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) class is designed specifically for radiology reports, `radreportparser` also provides a more generic [`extract_section()`](`radreportparser.extract_section`) function that can extract text sections from any document using custom start and end markers.
+
+### Basic Usage
+
+The `extract_section()` function requires:
+
+- Text to process
+- List of possible start markers (`start_keys`)
+- List of possible end markers (`end_keys`)
+
+Here's a simple example with a radiology report:
+
+```{python}
+from radreportparser import extract_section
+
+# Sample radiology text
+rad_text = """
+FINDINGS: Normal chest CT
+IMPRESSION: No acute abnormality
+"""
+
+# Extract findings section
+findings = extract_section(
+    text=rad_text,
+    start_keys=["FINDINGS:"],
+    end_keys=["IMPRESSION:"]
+)
+findings
+```
+
+
+### Flexible Text Extraction
+
+The function's flexibility makes it useful for parsing various medical documents. Here is an example for **pathology report**
+
+```{python}
+path_text = """
+**SPECIMEN:** Right breast core biopsy
+
+**GROSS DESCRIPTION:** Three cores of tan-white tissue
+**MICROSCOPIC EXAMINATION:** 
+
+- The specimen shows normal breast tissue with fibrous stroma
+
+== DIAGNOSIS ==
+- Benign breast tissue
+- No evidence of malignancy
+"""
+
+# Extract microscopic examination
+micro = extract_section(
+    text=path_text,
+    start_keys=[r"(\W*)MICROSCOPIC EXAMINATION(\W*)"],
+    end_keys=[r"(\W*)DIAGNOSIS(\W*)"]
+)
+micro
+```
+
+- The `\W*` regex pattern is used here to match zero or more non-word character (see [`re` for python regular expression](https://docs.python.org/3/library/re.html)).
+
+
+### Advanced Features
+
+#### Multiple Start/End Keys
+
+You can provide multiple possible section markers:
+
+```{python}
+# Multiple ways to mark findings sections
+clinical_note = """
+=== OBSERVATIONS ===
+Patient appears well
+
+=== ASSESSMENT ===
+Normal exam
+"""
+
+findings = extract_section(
+    text=clinical_note,
+    start_keys=[r"(\W*)FINDINGS(\W*)", r"(\W*)OBSERVATIONS(\W*)"],
+    end_keys=[r"(\W*)PLAN(\W*)", r"(\W*)ASSESSMENT(\W*)"]
+)
+findings
+```
+
+#### Word Boundaries
+
+Use `word_boundary=True` for more precise matching:
+
+```{python}
+text = """
+FINDING Normal
+IMPRESSION Abnormal
+"""
+
+# Without word boundaries
+section1 = extract_section(
+    text=text,
+    start_keys=["FINDING"],
+    end_keys=["IMP"],
+    word_boundary=False
+)
+section1
+```
+
+
+```{python}
+# With word boundaries
+section2 = extract_section(
+    text=text,
+    start_keys=["FINDING"],
+    end_keys=["IMP"],
+    word_boundary=True
+)
+# No match for `end_keys` 
+section2
+```
+
+#### Match Strategy Control
+
+Choose between 'greedy' and 'sequential' matching:
+
+```{python}
+text = """
+FINDING: First observation
+ASSESSMENT: OK
+NOTES: Additional info
+"""
+```
+
+**Greedy matching (default):**
+
+- Section ends by matching *any* of the `end_keys`
+
+```{python}
+section1 = extract_section(
+    text=text,
+    start_keys=["FINDING:"],
+    end_keys=["NOTES:", "ASSESSMENT:"],
+    match_strategy="greedy"
+)
+section1
+```
+
+**Sequential matching:** 
+
+- Section ends by matching the `end_keys` sequentially
+
+```{python}
+section2 = extract_section(
+    text=text,
+    start_keys=["FINDING:"],
+    end_keys=["NOTES:", "ASSESSMENT:"],
+    match_strategy="sequential"
+)
+section2
+```
 

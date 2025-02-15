@@ -1,30 +1,53 @@
 from enum import Enum
 
 class KeyWord(Enum):
-    """
+    """Section Keywords for Radiology Reports.
+    
     An enumeration class representing different sections commonly found in radiology reports.
     Each enum member contains a list of regular expressions used to match section headers.
-    Members:
-        HISTORY (list): Regular expressions for matching history/indication sections
-            - Matches standalone "history"
-            - Matches "indication(s)"
-            - Matches "clinical history" 
-            - Matches "clinical indication(s)"
-        TECHNIQUE (list): Regular expressions for matching technique sections
-            - Matches "technique(s)"
-        COMPARISON (list): Regular expressions for matching comparison sections
-            - Matches "comparison(s)"
-        FINDINGS (list): Regular expressions for matching findings sections
-            - Matches "Finding(s)"
-        IMPRESSION (list): Regular expressions for matching impression sections
-            - Matches "Impression(s)"
-        FOOTER (list): Regular expressions for matching footer sections
-            - Matches "Report Severity"
-            - Matches "Finalized Datetime"
-            - Matches "Preliminary Datetime"
-    Note:
-        - All patterns use non-word and non-newline character matching (`[^\w\n]*`) to match any non-word characters before and after the keyword.
-        - (s?) makes the 's' optional to match both singular and plural forms
+
+    Parameters
+    ----------
+    None
+
+    Attributes
+    ----------
+    HISTORY : list of str
+        Regular expressions for history/indication sections:
+        - Standalone "history"
+        - "indication(s)"
+        - "clinical history"
+        - "clinical indication(s)"
+    TECHNIQUE : list of str
+        Regular expressions for technique sections:
+        - "technique(s)"
+    COMPARISON : list of str 
+        Regular expressions for comparison sections:
+        - "comparison(s)"
+    FINDINGS : list of str
+        Regular expressions for findings sections:
+        - "finding(s)" 
+    IMPRESSION : list of str
+        Regular expressions for impression sections:
+        - "impression(s)"
+    FOOTER : list of str
+        Regular expressions for footer sections:
+        - "Report Severity"
+        - "Finalized Datetime" 
+        - "Preliminary Datetime"
+
+    Notes
+    -----
+    - Patterns use `[^\\w\\n]*` to match non-word/non-newline characters before/after keywords
+    - `(s?)` makes pluralization optional (e.g. "finding" or "findings")
+
+    Examples
+    --------
+    ```{python}
+    from radreportparser import KeyWord
+    # Get regex patterns for history section
+    KeyWord.HISTORY.value
+    ```
     """
     HISTORY = [r"[^\w\n]*History[^\w\n]*", r"[^\w\n]*Indication(s?)[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indication(s?)"]]]
     TECHNIQUE = [r"[^\w\n]*Technique(s?)[^\w\n]*"]
