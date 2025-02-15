@@ -1,18 +1,31 @@
-[tool.poetry]
+[build-system]
+requires = ["setuptools>=64.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
 name = "radreportparser"
 version = "0.1.0"
 description = "Parse Radiology Report Text"
-authors = ["Lightbridge-KS <ki11ip0.s.a.s@gmail.com>"]
-license = "MIT"
+authors = [
+    {name = "Lightbridge-KS", email = "ki11ip0.s.a.s@gmail.com"}
+]
+license = {text = "MIT"}
 readme = "README.md"
+requires-python = ">=3.10"
 
-[tool.poetry.dependencies]
-python = "^3.10"
+[project.urls]
+homepage = "https://github.com/Lightbridge-KS/radreportparser"
+documentation = "https://github.com/Lightbridge-KS/radreportparser"
 
 
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.4"
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.4"
+]
+docs = [
+    "quartodoc",
+    "jupyter"
+]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.setuptools]
+packages = ["radreportparser"]
