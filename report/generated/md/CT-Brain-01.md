@@ -1,34 +1,18 @@
 **EMERGENCY MDCT OF THE BRAIN**
 
-**HISTORY:** A 25-year-old female presents with dizziness and brief loss of consciousness following a minor head impact 3 hours ago. Physical examination reveals no focal neurological deficits. The CT scan was requested to rule out intracranial hemorrhage.
+**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.
 
-**TECHNIQUES:** Axial helical scan of the brain was performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.  
+**TECHNIQUE:** Axial helical scan of the brain performed with coronal and sagittal reconstructions.
 
-**COMPARISON:** None.
+**Comparison:** None.
 
-**FINDINGS:**
+**Findings:**
 
-**Cerebral parenchyma:** The study reveals age-appropriate brain volume. Normal parenchymal attenuation and gray-white differentiation. The remainder of the imaged cerebral parenchyma appears unremarkable. No acute large territorial infarction or intraparenchymal hemorrhage is identified.
-
-**Cerebellum and posterior fossa:** Normal, with a limited evaluation of the brainstem due to beam-hardening artifacts. The cerebellum appears unremarkable.
-
-**Extraaxial spaces:** No extra-axial collection is observed.
-
-**Ventricles:** Normal size of the ventricular system. No intraventricular hemorrhage.
-
-**Midline shift:** None.
-
-**Brain herniation:** None.
-
-**Vascular system:** Normal.
-
-**Calvarium and scalp:** No fracture identified.
-
-**Skull base, sella and temporomandibular joints (TMJs):** Normal.
-
-**Visualized orbits, paranasal sinuses and mastoid air cells:** Mild mucosal thickening in the right nasal cavity and bilateral maxillary sinuses. The remainder of the visualized orbits, mastoid air cells, and nasopharynx appear unremarkable.
-
-**Visualized upper cervical spine:** No fracture identified.
+The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.
 
 **IMPRESSION:**
 - No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.
+
+
+*Finalized Datetime: 11/12/2023 15:10:20*  
+
