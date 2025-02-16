@@ -4,7 +4,6 @@ from typing import (
     List,
     Tuple,
 )
-from ._logging import logger
 from ._pattern import _pattern_keys
 
 ## Start Position
@@ -15,6 +14,7 @@ def _find_start_position(
     keys: list[str] | None,
     word_boundary: bool = False,
     flags: re.RegexFlag = re.IGNORECASE,
+    verbose: bool = True,
 ) -> tuple[int, int]:
     """Helper function to find start position of the section"""
     if keys is None:
@@ -23,11 +23,9 @@ def _find_start_position(
     for key in keys:
         x = re.findall(key, text, flags)
         count = len(x)
-        if count >= 2:
-            logger.warning(
-                "Start pattern `%s` appear %d times in text, only the first one will be matched.",
-                key,
-                count,
+        if verbose and count >= 2:
+            print(
+                f"Start pattern {key} appear {count} times in text, only the first one will be matched."
             )
 
     start_match = _pattern_keys(keys, word_boundary, flags).search(text)
@@ -258,16 +256,22 @@ class SectionExtractor:
             f"match_strategy='{self.match_strategy}')"
         )
 
-    def extract(self, text: str) -> str:
+    def extract(
+        self,
+        text: str,
+        verbose: bool = True,
+    ) -> str:
         """Extract a section from the text using configured patterns.
-        
-        Extract a section from text if any of `start_keys` matches. 
+
+        Extract a section from text if any of `start_keys` matches.
         If multiple `start_keys` matches are found in `text`, return section from the first match.
-        
+
         Parameters
         ----------
         text : str
             The input text to extract section from.
+        verbose : bool
+            If `true` and there are more than one position of `text` that matches the `start_keys`, print message to standard output. 
 
         Returns
         -------
@@ -290,16 +294,32 @@ class SectionExtractor:
         ```
         """
         # Find start position
-        start_idx_start, start_idx_end = _find_start_position(text, self.start_keys)
+        start_idx_start, start_idx_end = _find_start_position(
+            text,
+            self.start_keys,
+            word_boundary=self.word_boundary,
+            flags=self.flags,
+            verbose=verbose,
+        )
         if start_idx_start == -1:  # No start match found
             return ""
 
         # Find end position based on strategy
         if self.match_strategy == "greedy":
-            end_idx = _find_end_position_greedy(text, self.end_keys, start_idx_start)
+            end_idx = _find_end_position_greedy(
+                text,
+                self.end_keys,
+                start_idx_start,
+                word_boundary=self.word_boundary,
+                flags=self.flags,
+            )
         else:
             end_idx = _find_end_position_sequential(
-                text, self.end_keys, start_idx_start
+                text,
+                self.end_keys,
+                start_idx_start,
+                word_boundary=self.word_boundary,
+                flags=self.flags,
             )
 
         # Extract the section
@@ -308,9 +328,9 @@ class SectionExtractor:
 
     def extract_all(self, text: str) -> List[str]:
         """Extract all sections from the text that match the configured patterns.
-        
-        Extract one or more section(s) from text if any of `start_keys` matches. 
-        
+
+        Extract one or more section(s) from text if any of `start_keys` matches.
+
 
         Parameters
         ----------
@@ -338,7 +358,7 @@ class SectionExtractor:
         IMPRESSION: Also OK
         '''
         sections = extractor.extract_all(text)
-        print(sections)  
+        print(sections)
         ```
         """
         # Find all start positions

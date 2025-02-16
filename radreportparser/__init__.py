@@ -7,5 +7,3 @@ from .report import RadReport
 from .section import (
     SectionExtractor
     )
-
-from ._logging import logger

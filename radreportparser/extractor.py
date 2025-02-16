@@ -169,6 +169,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Base method for extracting sections from radiology report text.
 
@@ -188,6 +189,9 @@ class RadReportExtractor:
             Regex flags to use in pattern matching
         match_strategy : {"greedy", "sequential"}
             Strategy for matching end keys
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -202,16 +206,7 @@ class RadReportExtractor:
             flags=flags,
             match_strategy=match_strategy,
         )
-        return extractor.extract(text)
-        # return extract_section(
-        #     text,
-        #     start_keys=start_keys,
-        #     end_keys=next_section_keys,
-        #     include_start_keys=include_key,
-        #     word_boundary=word_boundary,
-        #     flags=flags,
-        #     match_strategy=match_strategy,
-        # )
+        return extractor.extract(text, verbose=verbose)
 
     def _extract_section_by_name(
         self,
@@ -221,6 +216,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract a section by name from the radiology report text.
         """
@@ -236,6 +232,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_all(
@@ -376,6 +373,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the title section from the radiology report text.
 
@@ -394,6 +392,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -407,6 +408,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_history(
@@ -416,6 +418,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the history/indication section from the radiology report text.
 
@@ -434,6 +437,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -447,6 +453,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_technique(
@@ -456,6 +463,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the technique section from the radiology report text.
 
@@ -474,6 +482,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -487,6 +498,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_comparison(
@@ -496,6 +508,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the comparison section from the radiology report text.
 
@@ -514,6 +527,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -527,6 +543,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_findings(
@@ -536,6 +553,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the findings section from the radiology report text.
 
@@ -554,6 +572,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -567,6 +588,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
 
     def extract_impression(
@@ -576,6 +598,7 @@ class RadReportExtractor:
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        verbose: bool = True,
     ) -> str:
         """Extract the impression section from the radiology report text.
 
@@ -594,6 +617,9 @@ class RadReportExtractor:
             - "greedy": Use first matching end key (faster)
             - "sequential": Try end keys in order (more precise)
             Default is "greedy"
+        verbose : bool, optional
+            If True, prints messages if multiple start matches are found.
+            Default is True.
 
         Returns
         -------
@@ -607,5 +633,5 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            verbose=verbose,
         )
-
