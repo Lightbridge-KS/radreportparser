@@ -181,7 +181,7 @@ class SectionExtractor:
         extracted until the end of the text.
     include_start_keys : bool, optional
         Whether to include the start key in the extracted section.
-        Default is False.
+        Default is True.
     word_boundary : bool, optional
         Whether to wrap word boundary `\b` around the keys.
         Default is True.
@@ -211,7 +211,7 @@ class SectionExtractor:
         self,
         start_keys: list[str] | None,
         end_keys: list[str] | None,
-        include_start_keys: bool = False,
+        include_start_keys: bool = True,
         word_boundary: bool = False,
         flags: re.RegexFlag = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
