@@ -310,6 +310,7 @@ print(findings)
 ```
 
 
+
 ### Flexible Text Extraction
 
 The class's flexibility makes it useful for parsing various medical documents. Here is an example for **pathology report**
@@ -339,6 +340,35 @@ print(micro)
 ```
 
 - The `\W*` regex pattern is used here to match zero or more non-word character (see [`re` for python regular expression](https://docs.python.org/3/library/re.html)).
+
+### Extract All Sections
+
+`extract_all()` method can be used to extract one or more sections that any of `start_keys` matches. 
+
+```{python}
+conversation_text = """
+Human: Hi
+
+AI: Hello, How can I help you?
+
+Human:
+- What is 1+1
+- Think step-by-step
+
+AI: 
+1 + 1 = 2
+Answer: 2
+"""
+
+human_section_extractor = SectionExtractor(
+    start_keys=["human:"],
+    end_keys=["AI:"]
+)
+
+# Extract all section that match `start_keys`
+human_section_extractor.extract_all(conversation_text)
+```
+
 
 
 ### Advanced Features
