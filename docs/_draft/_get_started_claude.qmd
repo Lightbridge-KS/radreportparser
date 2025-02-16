@@ -1,0 +1,154 @@
+## Extract Section
+
+While the `RadReportExtractor` class is designed specifically for radiology reports, `radreportparser` also provides a more generic text extraction functionality through the `SectionExtractor` class, which can extract text sections from any document using custom start and end markers.
+
+### Basic Usage
+
+The `SectionExtractor` class requires:
+- List of possible start markers (`start_keys`)
+- List of possible end markers (`end_keys`)
+
+Here's a simple example with a radiology report:
+
+```{python}
+from radreportparser import SectionExtractor
+
+# Sample radiology text
+rad_text = """
+FINDINGS: Normal chest CT
+IMPRESSION: No acute abnormality
+"""
+
+# Create extractor for findings section
+findings_extractor = SectionExtractor(
+    start_keys=["FINDINGS:"],
+    end_keys=["IMPRESSION:"]
+)
+
+# Extract findings
+findings = findings_extractor.extract(rad_text)
+print(findings)
+```
+
+### Flexible Text Extraction
+
+The class's flexibility makes it useful for parsing various medical documents. Here are some examples:
+
+#### Pathology Reports
+
+```{python}
+path_text = """
+SPECIMEN: Right breast core biopsy
+GROSS DESCRIPTION: Three cores of tan-white tissue
+MICROSCOPIC EXAMINATION: 
+The specimen shows normal breast tissue with fibrous stroma
+DIAGNOSIS:
+- Benign breast tissue
+- No evidence of malignancy
+"""
+
+# Create extractor for microscopic examination
+micro_extractor = SectionExtractor(
+    start_keys=["MICROSCOPIC EXAMINATION:"],
+    end_keys=["DIAGNOSIS:"]
+)
+
+# Extract microscopic section
+micro = micro_extractor.extract(path_text)
+print(micro)
+```
+
+#### Clinical Notes
+
+```{python}
+clinical_note = """
+OBSERVATIONS:
+Patient appears well
+ASSESSMENT:
+Normal exam
+"""
+
+# Create extractor with multiple possible markers
+findings_extractor = SectionExtractor(
+    start_keys=["FINDINGS:", "OBSERVATIONS:", "EXAMINATION:"],
+    end_keys=["ASSESSMENT:", "IMPRESSION:", "PLAN:"]
+)
+
+findings = findings_extractor.extract(clinical_note)
+print(findings)
+```
+
+### Advanced Features
+
+The `SectionExtractor` class supports several advanced features:
+
+#### Word Boundaries
+
+Use `word_boundary=True` for more precise matching:
+
+```{python}
+text = """
+FINDING: Normal
+FINDINGS: Abnormal
+"""
+
+# Create extractors with different word boundary settings
+extractor_no_boundary = SectionExtractor(
+    start_keys=["FINDING"],
+    end_keys=["FINDINGS"],
+    word_boundary=False
+)
+
+extractor_with_boundary = SectionExtractor(
+    start_keys=["FINDING"],
+    end_keys=["FINDINGS"],
+    word_boundary=True
+)
+
+print("Without word boundaries:")
+print(extractor_no_boundary.extract(text))
+
+print("\nWith word boundaries:")
+print(extractor_with_boundary.extract(text))
+```
+
+#### Match Strategy Control
+
+Choose between 'greedy' and 'sequential' matching:
+
+```{python}
+text = """
+FINDING: First observation
+NOTES: Additional info
+ASSESSMENT: Final notes
+"""
+
+# Create extractors with different matching strategies
+greedy_extractor = SectionExtractor(
+    start_keys=["FINDING:"],
+    end_keys=["NOTES:", "ASSESSMENT:"],
+    match_strategy="greedy"
+)
+
+sequential_extractor = SectionExtractor(
+    start_keys=["FINDING:"],
+    end_keys=["NOTES:", "ASSESSMENT:"],
+    match_strategy="sequential"
+)
+
+print("Greedy matching:")
+print(greedy_extractor.extract(text))
+
+print("\nSequential matching:")
+print(sequential_extractor.extract(text))
+```
+
+::::{.callout-tip}
+Key advantages of using `SectionExtractor`:
+- Separates configuration from text extraction
+- Reuse the same extractor for multiple texts
+- Configure word boundaries and match strategy once
+- Handle missing sections (returns empty string if section not found)
+::::
+
+The `SectionExtractor` class provides a flexible foundation for text extraction beyond radiology reports, making it useful for various medical document processing tasks. Its configuration-first approach makes it particularly efficient when processing multiple documents with the same structure.

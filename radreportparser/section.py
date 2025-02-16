@@ -114,74 +114,138 @@ def _find_end_position_sequential(text: str,
 
 
 
-def extract_section(text: str,
-                   start_keys: list[str] | None,
-                   end_keys: list[str] | None,
-                   include_start_keys: bool = False,
-                   word_boundary: bool = False,
-                   flags: re.RegexFlag = re.IGNORECASE,
-                   match_strategy: Literal["greedy", "sequential"] = "greedy",
-                   ) -> str | Literal[""]:
-    """Extract a section of text between keys.
 
-    This function searches for a section of text that begins with any of the start keys
-    and ends with any of the end keys. 
+
+
+class SectionExtractor:
+    """Extract sections from text based on start and end keys.
+    
+    This class provides functionality to extract sections of text that begin with
+    any of the start keys and end just before any of the end keys (i.e., not include the end keys).
     
     - If no start key is found, return `""`.  
-    - If start key is `None`, the section will start from the beginning of the text unitl the end key (if found).
+    - If start key is `None`, the section will start from the beginning of the text until the end key (exclusive).
     - If no end key is found or end key is `None`, it extracts until the end of the text.
-
+    
     Parameters
     ----------
-    text : str
-        The input text to search through.
-    start_keys : list[str], None
-        List of possible section start markers. If None, the section will be extracted from the beginning of the text.
-    end_keys : list[str], None
-        List of possible section end markers. If None, the section will be extracted
-        until the end of the text.
+    start_keys : list[str] | None
+        List of possible section start markers. If None, the section will be
+        extracted from the beginning of the text.
+    end_keys : list[str] | None
+        List of possible section end markers. The `end_key` will not be included in the extracted section. If None, the section will be
+        extracted until the end of the text.
     include_start_keys : bool, optional
         Whether to include the start key in the extracted section.
-        Default is True.
-    word_boundary : bool, optional
-        Whether to wrap word boundary `\b` around the `start_keys` and `end_keys`.
         Default is False.
+    word_boundary : bool, optional
+        Whether to wrap word boundary `\b` around the keys.
+        Default is True.
     flags : re.RegexFlag, optional
         Regex flags to use in pattern matching.
         Default is `re.IGNORECASE`.
-    match_strategy : MatchStrategy, optional
+    match_strategy : {"greedy", "sequential"}, optional
         Strategy for matching end keys:
         - "greedy": Use first matching end key (faster)
         - "sequential": Try end keys in order (more precise)
-        Default is "greedy"
-
+        Default is "greedy".
     
     Examples
     --------
     ```{python}
-    from radreportparser import extract_section
-    text = "FINDINGS: Normal. TECHNIQUE: MRI. IMPRESSION: Clear."
-    # Using sequential matching
-    extract_section(text, ["FINDINGS:"], 
-                   ["TECHNIQUE:", "IMPRESSION:"],
-                   match_strategy="sequential")
+    from radreportparser import SectionExtractor
+    # Create an extractor for finding text between headers
+    extractor = SectionExtractor(
+        start_keys=["FINDINGS:"],
+        end_keys=["IMPRESSION:", "CONCLUSION:"]
+    )
+    print(extractor) 
     ```
     """
-    # Find end position based on strategy
-    match_strategy_options =  frozenset({"greedy", "sequential"})
-    if match_strategy not in match_strategy_options:
-        raise ValueError(f"Invalid value: {match_strategy}. Must be one of: {', '.join(match_strategy_options)}")
     
-    # Find start position    
-    start_idx_start, start_idx_end = _find_start_position(text, start_keys, word_boundary=word_boundary, flags=flags)
-    if start_idx_start == -1:  # No start match found
-        return ""
-    
-    if match_strategy == "greedy":
-        end_idx = _find_end_position_greedy(text, end_keys, start_idx_start, word_boundary=word_boundary, flags=flags)
-    else:
-        end_idx = _find_end_position_sequential(text, end_keys, start_idx_start, word_boundary=word_boundary, flags=flags)
-    
-    # Extract the section
-    section_start = start_idx_start if include_start_keys else start_idx_end
-    return text[section_start:end_idx].strip()
+    def __init__(
+        self,
+        start_keys: list[str] | None,
+        end_keys: list[str] | None,
+        include_start_keys: bool = False,
+        word_boundary: bool = False,
+        flags: re.RegexFlag = re.IGNORECASE,
+        match_strategy: Literal["greedy", "sequential"] = "greedy",
+    ):
+        self.start_keys = start_keys
+        self.end_keys = end_keys
+        self.include_start_keys = include_start_keys
+        self.word_boundary = word_boundary
+        self.flags = flags
+        
+        # Validate match strategy
+        match_strategy_options = frozenset({"greedy", "sequential"})
+        if match_strategy not in match_strategy_options:
+            raise ValueError(
+                f"Invalid value: {match_strategy}. "
+                f"Must be one of: {', '.join(match_strategy_options)}"
+            )
+        self.match_strategy = match_strategy
+
+    def __repr__(self) -> str:
+        """Return a detailed string representation of the SectionExtractor.
+        """
+        # Format start_keys and end_keys lists
+        start_keys_str = f"[{', '.join(repr(k) for k in self.start_keys)}]" if self.start_keys else "None"
+        end_keys_str = f"[{', '.join(repr(k) for k in self.end_keys)}]" if self.end_keys else "None"
+        
+        # Format flags 
+        flags_name = self.flags.name if hasattr(self.flags, 'name') else str(self.flags)
+        
+        return (
+            f"{self.__class__.__name__}("
+            f"start_keys={start_keys_str}, "
+            f"end_keys={end_keys_str}, "
+            f"include_start_keys={self.include_start_keys=}, "
+            f"word_boundary={self.word_boundary}, "
+            f"flags=re.{flags_name}, "
+            f"match_strategy='{self.match_strategy}')"
+        )
+
+    def extract(self, text: str) -> str:
+        """Extract a section from the text using configured patterns.
+        
+        Parameters
+        ----------
+        text : str
+            The input text to extract section from.
+            
+        Returns
+        -------
+        str
+            The extracted section text. Returns empty string if section not found.
+            
+        Examples
+        --------
+        ```{python}
+        # Create an extractor for finding text
+        from radreportparser import SectionExtractor
+        extractor = SectionExtractor(
+            start_keys=["FINDINGS:"], 
+            end_keys=["IMPRESSION:"]
+        )
+        # Extract section from text
+        text = "FINDINGS: Normal. IMPRESSION: Clear."
+        section = extractor.extract(text)
+        print(section) 
+        ```
+        """
+        # Find start position
+        start_idx_start, start_idx_end = _find_start_position(text, self.start_keys)
+        if start_idx_start == -1:  # No start match found
+            return ""
+        
+        # Find end position based on strategy
+        if self.match_strategy == "greedy":
+            end_idx = _find_end_position_greedy(text, self.end_keys, start_idx_start)
+        else:
+            end_idx = _find_end_position_sequential(text, self.end_keys, start_idx_start)
+        
+        # Extract the section
+        section_start = start_idx_start if self.include_start_keys else start_idx_end
+        return text[section_start:end_idx].strip()

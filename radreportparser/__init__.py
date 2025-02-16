@@ -4,6 +4,8 @@ from .extractor import (
 )
 from .keyword import KeyWord
 from .report import RadReport
-from .section import extract_section
+from .section import (
+    SectionExtractor
+    )
 
 from ._logging import logger

@@ -4,7 +4,7 @@ from typing import List, Optional, Literal
 
 from .keyword import KeyWord
 from .report import RadReport
-from .section import extract_section
+from .section import SectionExtractor
 
 
 @dataclass
@@ -194,9 +194,7 @@ class RadReportExtractor:
         str
             The extracted section text. Returns empty string if section not found.
         """
-
-        return extract_section(
-            text,
+        extractor = SectionExtractor(
             start_keys=start_keys,
             end_keys=next_section_keys,
             include_start_keys=include_key,
@@ -204,6 +202,16 @@ class RadReportExtractor:
             flags=flags,
             match_strategy=match_strategy,
         )
+        return extractor.extract(text)
+        # return extract_section(
+        #     text,
+        #     start_keys=start_keys,
+        #     end_keys=next_section_keys,
+        #     include_start_keys=include_key,
+        #     word_boundary=word_boundary,
+        #     flags=flags,
+        #     match_strategy=match_strategy,
+        # )
 
     def _extract_section_by_name(
         self,

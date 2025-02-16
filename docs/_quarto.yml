@@ -85,7 +85,7 @@ quartodoc:
     - subtitle: Section Extractor
       desc: "Extract text based on section start & end keywords"
       contents:
-      - extract_section
+      - SectionExtractor
     
 
 

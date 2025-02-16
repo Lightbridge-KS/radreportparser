@@ -276,20 +276,21 @@ When configuring custom keywords:
 
 ## Extract Section
 
-While the [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) class is designed specifically for radiology reports, `radreportparser` also provides a more generic [`extract_section()`](`radreportparser.extract_section`) function that can extract text sections from any document using custom start and end markers.
+While the [`RadReportExtractor()`](`radreportparser.RadReportExtractor`)class is designed specifically for radiology reports, `radreportparser` also provides a more generic text extraction functionality through the [`SectionExtractor`](`radreportparser.SectionExtractor`) class, which can extract text sections from any document using custom start and end markers.
 
 ### Basic Usage
 
-The `extract_section()` function requires:
+The `SectionExtractor` class requires:
 
-- Text to process
-- List of possible start markers (`start_keys`)
-- List of possible end markers (`end_keys`)
+- `start_keys`: A list of possible starting keywords, each one represented by Python regular expression. 
+- `end_keys`: A list of possible ending keywords (exclusive), each one represented by Python regular expression. 
+
+The `SectionExtractor` extract text from the `start_keys` and unitil (but not include) the `end_keys`. 
 
 Here's a simple example with a radiology report:
 
 ```{python}
-from radreportparser import extract_section
+from radreportparser import SectionExtractor
 
 # Sample radiology text
 rad_text = """
@@ -297,19 +298,21 @@ FINDINGS: Normal chest CT
 IMPRESSION: No acute abnormality
 """
 
-# Extract findings section
-findings = extract_section(
-    text=rad_text,
+# Create extractor for findings section
+findings_extractor = SectionExtractor(
     start_keys=["FINDINGS:"],
     end_keys=["IMPRESSION:"]
 )
-findings
+
+# Extract findings
+findings = findings_extractor.extract(rad_text)
+print(findings)
 ```
 
 
 ### Flexible Text Extraction
 
-The function's flexibility makes it useful for parsing various medical documents. Here is an example for **pathology report**
+The class's flexibility makes it useful for parsing various medical documents. Here is an example for **pathology report**
 
 ```{python}
 path_text = """
@@ -325,13 +328,14 @@ path_text = """
 - No evidence of malignancy
 """
 
-# Extract microscopic examination
-micro = extract_section(
-    text=path_text,
+# Create extractor for microscopic examination
+micro_extractor = SectionExtractor(
     start_keys=[r"(\W*)MICROSCOPIC EXAMINATION(\W*)"],
     end_keys=[r"(\W*)DIAGNOSIS(\W*)"]
 )
-micro
+# Extract microscopic section
+micro = micro_extractor.extract(path_text)
+print(micro)
 ```
 
 - The `\W*` regex pattern is used here to match zero or more non-word character (see [`re` for python regular expression](https://docs.python.org/3/library/re.html)).
@@ -353,12 +357,11 @@ Patient appears well
 Normal exam
 """
 
-findings = extract_section(
-    text=clinical_note,
+clincal_extractor = SectionExtractor(
     start_keys=[r"(\W*)FINDINGS(\W*)", r"(\W*)OBSERVATIONS(\W*)"],
     end_keys=[r"(\W*)PLAN(\W*)", r"(\W*)ASSESSMENT(\W*)"]
 )
-findings
+clincal_extractor.extract(clinical_note)
 ```
 
 #### Word Boundaries
@@ -372,26 +375,24 @@ IMPRESSION Abnormal
 """
 
 # Without word boundaries
-section1 = extract_section(
-    text=text,
+extractor_no_boundary = SectionExtractor(
     start_keys=["FINDING"],
     end_keys=["IMP"],
     word_boundary=False
 )
-section1
+extractor_no_boundary.extract(text)
 ```
 
 
 ```{python}
 # With word boundaries
-section2 = extract_section(
-    text=text,
+extractor_with_boundary = SectionExtractor(
     start_keys=["FINDING"],
     end_keys=["IMP"],
     word_boundary=True
 )
 # No match for `end_keys` 
-section2
+extractor_with_boundary.extract(text)
 ```
 
 #### Match Strategy Control
@@ -411,13 +412,12 @@ NOTES: Additional info
 - Section ends by matching *any* of the `end_keys`
 
 ```{python}
-section1 = extract_section(
-    text=text,
+extractor_greedy = SectionExtractor(
     start_keys=["FINDING:"],
     end_keys=["NOTES:", "ASSESSMENT:"],
     match_strategy="greedy"
 )
-section1
+extractor_greedy.extract(text)
 ```
 
 **Sequential matching:** 
@@ -425,12 +425,11 @@ section1
 - Section ends by matching the `end_keys` sequentially
 
 ```{python}
-section2 = extract_section(
-    text=text,
+extractor_sequential = SectionExtractor(
     start_keys=["FINDING:"],
     end_keys=["NOTES:", "ASSESSMENT:"],
     match_strategy="sequential"
 )
-section2
+extractor_sequential.extract(text)
 ```
 
