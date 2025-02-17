@@ -2,7 +2,7 @@
 
 <!-- badges: start -->
 [![Lifecycle:
-experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) [![codecov](https://codecov.io/gh/Lightbridge-KS/radreportparser/graph/badge.svg?token=6W2CZHZ311)](https://codecov.io/gh/Lightbridge-KS/radreportparser)
 <!-- badges: end -->
 
 
