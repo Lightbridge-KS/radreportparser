@@ -331,15 +331,21 @@ path_text = """
 
 # Create extractor for microscopic examination
 micro_extractor = SectionExtractor(
-    start_keys=[r"(\W*)MICROSCOPIC EXAMINATION(\W*)"],
-    end_keys=[r"(\W*)DIAGNOSIS(\W*)"]
+    start_keys=[r"(:?\W*)MICROSCOPIC EXAMINATION(:?\W*)"],
+    end_keys=[r"(:?\W*)DIAGNOSIS(:?\W*)"],
+    include_start_keys = False
 )
 # Extract microscopic section
 micro = micro_extractor.extract(path_text)
 print(micro)
 ```
 
+::: {.callout-note appearance="default" collapse="false"}
 - The `\W*` regex pattern is used here to match zero or more non-word character (see [`re` for python regular expression](https://docs.python.org/3/library/re.html)).
+- `include_start_keys = False` to exclude `start_keys`
+:::
+
+
 
 ### Extract All Sections
 
@@ -362,7 +368,8 @@ Answer: 2
 
 human_section_extractor = SectionExtractor(
     start_keys=["human:"],
-    end_keys=["AI:"]
+    end_keys=["AI:"],
+    include_start_keys = False
 )
 
 # Extract all section that match `start_keys`
@@ -389,7 +396,8 @@ Normal exam
 
 clincal_extractor = SectionExtractor(
     start_keys=[r"(\W*)FINDINGS(\W*)", r"(\W*)OBSERVATIONS(\W*)"],
-    end_keys=[r"(\W*)PLAN(\W*)", r"(\W*)ASSESSMENT(\W*)"]
+    end_keys=[r"(\W*)PLAN(\W*)", r"(\W*)ASSESSMENT(\W*)"],
+    include_start_keys = False
 )
 clincal_extractor.extract(clinical_note)
 ```
