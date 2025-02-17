@@ -395,8 +395,8 @@ Normal exam
 """
 
 clincal_extractor = SectionExtractor(
-    start_keys=[r"(\W*)FINDINGS(\W*)", r"(\W*)OBSERVATIONS(\W*)"],
-    end_keys=[r"(\W*)PLAN(\W*)", r"(\W*)ASSESSMENT(\W*)"],
+    start_keys=[r"(?:\W*)FINDINGS(?:\W*)", r"(?:\W*)OBSERVATIONS(?:\W*)"],
+    end_keys=[r"(?:\W*)PLAN(?:\W*)", r"(?:\W*)ASSESSMENT(?:\W*)"],
     include_start_keys = False
 )
 clincal_extractor.extract(clinical_note)
@@ -439,19 +439,20 @@ Choose between 'greedy' and 'sequential' matching:
 
 ```{python}
 text = """
-FINDING: First observation
-ASSESSMENT: OK
-NOTES: Additional info
+OBSERVATION: None 
+FINDING: Unremarkable
+ASSESSMENT: Stable
+NOTES: Continue monitoring
 """
 ```
 
 **Greedy matching (default):**
 
-- Section ends by matching *any* of the `end_keys`
+- Section ends by matching *any* of the `start_keys` or `end_keys`
 
 ```{python}
 extractor_greedy = SectionExtractor(
-    start_keys=["FINDING:"],
+    start_keys=["FINDING:", "OBSERVATION:"],
     end_keys=["NOTES:", "ASSESSMENT:"],
     match_strategy="greedy"
 )
@@ -460,11 +461,11 @@ extractor_greedy.extract(text)
 
 **Sequential matching:** 
 
-- Section ends by matching the `end_keys` sequentially
+- Section ends by matching the `start_keys` or `end_keys` sequentially
 
 ```{python}
 extractor_sequential = SectionExtractor(
-    start_keys=["FINDING:"],
+    start_keys=["FINDING:", "OBSERVATION:"],
     end_keys=["NOTES:", "ASSESSMENT:"],
     match_strategy="sequential"
 )
