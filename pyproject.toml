@@ -1,10 +1,10 @@
 [build-system]
-requires = ["setuptools>=64.0", "wheel"]
+requires = ["setuptools>=64.0", "wheel", "setuptools-scm>=8"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "radreportparser"
-version = "0.1.0"
+dynamic = ["version"]
 description = "Parse Radiology Report Text"
 authors = [
     {name = "Lightbridge-KS", email = "ki11ip0.s.a.s@gmail.com"}
@@ -15,7 +15,7 @@ requires-python = ">=3.10"
 
 [project.urls]
 homepage = "https://github.com/Lightbridge-KS/radreportparser"
-documentation = "https://github.com/Lightbridge-KS/radreportparser"
+documentation = "https://lightbridge-ks.github.io/radreportparser/"
 
 
 [project.optional-dependencies]
@@ -30,3 +30,10 @@ docs = [
 
 [tool.setuptools]
 packages = ["radreportparser"]
+
+
+[tool.setuptools_scm]
+# Use "no-guess-dev" to get version format like 0.1.0.dev5+g12345
+version_scheme = "no-guess-dev"
+# Write version to _version.py for runtime access
+write_to = "radreportparser/_version.py"
