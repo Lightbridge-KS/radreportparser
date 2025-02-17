@@ -1,5 +1,6 @@
 project:
   type: website
+  pre-render: version_config.py
   output-dir: _site
 
 
@@ -9,9 +10,10 @@ website:
   page-navigation: true
   # favicon: "favicon.ico"
   navbar:
-    background: primary
+    background: "#1A5276" # "#117864"
+    # background: primary
     # logo: logo.png
-    pinned: true
+    pinned: false
     search: true
     left:
       # - text: "Home"
@@ -39,14 +41,11 @@ website:
 metadata-files:
   - _sidebar.yml
 
-# tell quarto to read the generated styles
-# format:
-#   css:
-#     - api/_styles-quartodoc.css
 
 
 quartodoc:
   # the name used to import the package you want to create reference docs for
+  title: radreportparser # To specify version: "v{{< env VERSION >}}"
   package: radreportparser
   style: pkgdown
   dir: reference
