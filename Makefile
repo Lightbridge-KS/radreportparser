@@ -24,6 +24,14 @@ docs doc documentation: install-edit
 preview: docs
 	cd docs && quarto preview
 
+# Quarto Preview (No Doc)
+prev:
+	cd docs && quarto preview
+
+# Quarto Render
+render: docs
+	cd docs && quarto render
+
 build-pkg:
 	python -m build
 
