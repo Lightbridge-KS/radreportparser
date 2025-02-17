@@ -48,6 +48,31 @@ class KeyWord(Enum):
     # Get regex patterns for history section
     KeyWord.HISTORY.value
     ```
+    
+    ```{python}
+    # Technique section
+    KeyWord.TECHNIQUE.value
+    ```
+    
+    ```{python}
+    # Comparison section
+    KeyWord.COMPARISON.value
+    ```
+    
+    ```{python}
+    # Findings section
+    KeyWord.FINDINGS.value
+    ```
+
+    ```{python}
+    # Impression section
+    KeyWord.IMPRESSION.value
+    ```
+    
+    ```{python}
+    # Footer section
+    KeyWord.FOOTER.value
+    ```
     """
     HISTORY = [r"[^\w\n]*History[^\w\n]*", r"[^\w\n]*Indications?[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indications?"]]]
     TECHNIQUE = [r"[^\w\n]*Techniques?[^\w\n]*"]
