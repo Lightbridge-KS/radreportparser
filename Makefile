@@ -6,7 +6,7 @@ help:
 	@echo "Available commands:"
 # Test
 test-ci:
-	pytest --cov=radreportparser --cov-branch --cov-report=xml
+	pytest --cov=radreportparser --cov-report=xml
 
 # Install in editable mode
 install-edit: 
