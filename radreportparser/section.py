@@ -5,9 +5,11 @@ from typing import (
 )
 from ._position import (
     _find_start_position_greedy,
+    _find_start_position_sequential,
     _find_start_position_greedy_all,
     _find_end_position_greedy,
-    _find_end_position_sequential
+    _find_end_position_sequential,
+    _find_start_position_sequential_all
 )
 
 
@@ -20,14 +22,28 @@ class SectionExtractor:
     - If no start key is found, return `""`.
     - If start key is `None`, the section will start from the beginning of the text until the end key (exclusive).
     - If no end key is found or end key is `None`, it extracts until the end of the text.
+    
+    **`match_strategy`:** Strategy for matching both start and end keys:
+    
+    - "greedy" (default):
+        - Scans text from left to right
+        - Returns first match found for any pattern in keys
+        - Order of patterns in keys list doesn't matter
+        - Faster but less precise when order matters
+    
+    - "sequential":
+        - Tries each pattern in keys list in order
+        - Returns first successful match
+        - Order of patterns in keys list matters
+        - More precise but slightly slower
 
     Parameters
     ----------
     start_keys : list[str] | None
-        List of possible section start markers. If None, the section will be
+        List of possible section start markers as regular expression. If None, the section will be
         extracted from the beginning of the text.
     end_keys : list[str] | None
-        List of possible section end markers. The `end_key` will not be included in the extracted section. If None, the section will be
+        List of possible section end markers as regular expression. The `end_key` will not be included in the extracted section. If None, the section will be
         extracted until the end of the text.
     include_start_keys : bool, optional
         Whether to include the start key in the extracted section.
@@ -39,10 +55,19 @@ class SectionExtractor:
         Regex flags to use in pattern matching.
         Default is `re.IGNORECASE`.
     match_strategy : {"greedy", "sequential"}, optional
-        Strategy for matching end keys:
-        - "greedy": Use first matching end key (faster)
-        - "sequential": Try end keys in order (more precise)
-        Default is "greedy".
+        Strategy for matching both start and end keys:
+    
+    "greedy" (default):
+        - Scans text from left to right
+        - Returns first match found for any pattern in keys
+        - Order of patterns in keys list doesn't matter
+        - Faster but less precise when order matters
+    
+    "sequential":
+        - Tries each pattern in keys list in order
+        - Returns first successful match
+        - Order of patterns in keys list matters
+        - More precise but slightly slower
 
     Examples
     --------
@@ -116,7 +141,8 @@ class SectionExtractor:
         """Extract a section from the text using configured patterns.
 
         Extract a section from text if any of `start_keys` matches.
-        If multiple `start_keys` matches are found in `text`, return section from the first match.
+        If multiple `start_keys` matches are found in `text`, return section from the first match. 
+        The matching strategy is controlled by `match_strategy` argument in the initialization of `SectionExtractor()`
 
         Parameters
         ----------
@@ -145,14 +171,24 @@ class SectionExtractor:
         print(section)
         ```
         """
-        # Find start position
-        start_idx_start, start_idx_end = _find_start_position_greedy(
-            text,
-            self.start_keys,
-            word_boundary=self.word_boundary,
-            flags=self.flags,
-            verbose=verbose,
-        )
+        # Find start position based on strategy
+        if self.match_strategy == "greedy":
+            start_idx_start, start_idx_end = _find_start_position_greedy(
+                text,
+                self.start_keys,
+                word_boundary=self.word_boundary,
+                flags=self.flags,
+                verbose=verbose,
+            )
+        else:
+            start_idx_start, start_idx_end = _find_start_position_sequential(
+                text,
+                self.start_keys,
+                word_boundary=self.word_boundary,
+                flags=self.flags,
+                verbose=verbose,
+            )
+
         if start_idx_start == -1:  # No start match found
             return ""
 
@@ -182,6 +218,7 @@ class SectionExtractor:
         """Extract all sections from the text that match the configured patterns.
 
         Extract one or more section(s) from text if any of `start_keys` matches.
+        The matching strategy is controlled by `match_strategy` argument in the initialization of `SectionExtractor()`.
 
 
         Parameters
@@ -213,10 +250,21 @@ class SectionExtractor:
         print(sections)
         ```
         """
-        # Find all start positions
-        start_positions = _find_start_position_greedy_all(
-            text, self.start_keys, self.word_boundary, self.flags
-        )
+        # Find all start positions based on strategy
+        if self.match_strategy == "greedy":
+            start_positions = _find_start_position_greedy_all(
+                text, 
+                self.start_keys, 
+                self.word_boundary, 
+                self.flags
+            )
+        else:
+            start_positions = _find_start_position_sequential_all(
+                text, 
+                self.start_keys, 
+                self.word_boundary, 
+                self.flags
+            )
 
         if not start_positions:
             return []
@@ -228,17 +276,23 @@ class SectionExtractor:
             # Find end position based on strategy
             if self.match_strategy == "greedy":
                 end_idx = _find_end_position_greedy(
-                    text, self.end_keys, start_idx_start, self.word_boundary, self.flags
+                    text, 
+                    self.end_keys, 
+                    start_idx_start, 
+                    self.word_boundary, 
+                    self.flags
                 )
             else:
                 end_idx = _find_end_position_sequential(
-                    text, self.end_keys, start_idx_start, self.word_boundary, self.flags
+                    text, 
+                    self.end_keys, 
+                    start_idx_start, 
+                    self.word_boundary, 
+                    self.flags
                 )
 
             # Extract the section
-            section_start = (
-                start_idx_start if self.include_start_keys else start_idx_end
-            )
+            section_start = start_idx_start if self.include_start_keys else start_idx_end
             section = text[section_start:end_idx].strip()
 
             if section:  # Only add non-empty sections

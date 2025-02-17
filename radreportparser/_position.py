@@ -69,6 +69,111 @@ def _find_start_position_greedy_all(
     return [(m.start(), m.end()) for m in matches]
 
 
+def _find_start_position_sequential(
+    text: str,
+    keys: list[str] | None,
+    word_boundary: bool = False,
+    flags: re.RegexFlag = re.IGNORECASE,
+    verbose: bool = True,
+) -> tuple[int, int]:
+    """Find the start position of a section using sequential matching.
+
+    Tries each start key in order and returns the position of the first successful match.
+    More precise when the order of keys matters.
+
+    Parameters
+    ----------
+    text : str
+        The input text to search through
+    keys : list[str] | None
+        List of possible start markers, tried in order
+    word_boundary : bool, optional
+        Whether to use word boundaries in pattern matching
+    flags : re.RegexFlag, optional
+        Regex flags to use in pattern matching
+    verbose : bool, optional
+        If True, prints warning when multiple matches are found
+
+    Returns
+    -------
+    tuple[int, int]
+        A tuple containing (start, end) positions.
+        Returns (0, 0) if keys is None.
+        Returns (-1, -1) if no matches found.
+    """
+    if keys is None:
+        return 0, 0
+
+    # Try each key in sequence
+    for key in keys:
+        # Create pattern for single key
+        pattern = _pattern_keys([key], word_boundary, flags)
+        match = pattern.search(text)
+
+        if match:
+            # Warn if pattern appears more than once
+            if verbose:
+                all_matches = list(pattern.finditer(text))
+                if len(all_matches) >= 2:
+                    print(
+                        f"Start pattern {key} appears {len(all_matches)} times in text, "
+                        "only the first one will be matched."
+                    )
+            return match.start(), match.end()
+
+    # If no matches found, return indicator
+    return -1, -1
+
+
+def _find_start_position_sequential_all(
+    text: str,
+    keys: list[str] | None,
+    word_boundary: bool = False,
+    flags: re.RegexFlag = re.IGNORECASE,
+) -> List[Tuple[int, int]]:
+    """Find all start positions of sections using sequential matching.
+
+    Tries each start key in order and collects all successful matches.
+    This follows the sequential strategy where the order of keys matters.
+
+    Parameters
+    ----------
+    text : str
+        The input text to search through
+    keys : list[str] | None
+        List of possible section start markers to try in order
+    word_boundary : bool, optional
+        Whether to use word boundaries in pattern matching
+    flags : re.RegexFlag, optional
+        Regex flags to use in pattern matching
+
+    Returns
+    -------
+    List[Tuple[int, int]]
+        List of tuples containing (start, end) positions of all matches.
+        Returns [(0, 0)] if keys is None.
+        Returns [] if no matches found.
+    """
+    if keys is None:
+        return [(0, 0)]
+
+    all_positions = []
+    
+    # Try each key in sequence
+    for key in keys:
+        # Create pattern for single key
+        pattern = _pattern_keys([key], word_boundary, flags)
+        
+        # Find all matches for this key
+        matches = list(pattern.finditer(text))
+        if matches:
+            # Add all positions for this key
+            all_positions.extend([(m.start(), m.end()) for m in matches])
+    
+    # Sort positions by start index to maintain document order
+    return sorted(all_positions) if all_positions else []
+
+
 ## End Position
 
 
