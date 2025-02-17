@@ -4,6 +4,9 @@
 # Help target - lists available commands
 help:
 	@echo "Available commands:"
+# Test
+test-ci:
+	pytest --cov-branch --cov-report=xml
 
 # Install in editable mode
 install-edit: 
