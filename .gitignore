@@ -1,3 +1,6 @@
+# Version File
+radreportparser/_version.py
+
 # Doc
 /.quarto/
 /docs/site/*
