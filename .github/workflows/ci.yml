@@ -24,7 +24,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e .[docs, dev]
+          python -m pip install -e ".[docs, dev]"
       - name: Test
         uses: codecov/codecov-action@v5
         with:
