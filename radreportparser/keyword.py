@@ -39,7 +39,7 @@ class KeyWord(Enum):
     Notes
     -----
     - Patterns use `[^\\w\\n]*` to match non-word/non-newline characters before/after keywords
-    - `(s?)` makes pluralization optional (e.g. "finding" or "findings")
+    - `s?` makes pluralization optional (e.g. "finding" or "findings")
 
     Examples
     --------
@@ -49,9 +49,9 @@ class KeyWord(Enum):
     KeyWord.HISTORY.value
     ```
     """
-    HISTORY = [r"[^\w\n]*History[^\w\n]*", r"[^\w\n]*Indication(s?)[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indication(s?)"]]]
-    TECHNIQUE = [r"[^\w\n]*Technique(s?)[^\w\n]*"]
-    COMPARISON = [r"[^\w\n]*Comparison(s?)[^\w\n]*"]
-    FINDINGS = [r"[^\w\n]*Finding(s?)[^\w\n]*"]
-    IMPRESSION = [r"[^\w\n]*Impression(s?)[^\w\n]*"]
+    HISTORY = [r"[^\w\n]*History[^\w\n]*", r"[^\w\n]*Indications?[^\w\n]*", *[rf"[^\w\n]*clinical\s+{h}[^\w\n]*" for h in ["history", r"indications?"]]]
+    TECHNIQUE = [r"[^\w\n]*Techniques?[^\w\n]*"]
+    COMPARISON = [r"[^\w\n]*Comparisons?[^\w\n]*"]
+    FINDINGS = [r"[^\w\n]*Findings?[^\w\n]*"]
+    IMPRESSION = [r"[^\w\n]*Impressions?[^\w\n]*"]
     FOOTER = [r"[^\w\n]*Report Severity[^\w\n]*", r"[^\w\n]*Finalized Datetime[^\w\n]*", r"[^\w\n]*Preliminary Datetime[^\w\n]*"]
