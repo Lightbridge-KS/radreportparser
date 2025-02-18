@@ -14,8 +14,8 @@ def _pattern_keys(
     
     if word_boundary:
         # \b is a word boundary, which matches the position where a word starts or ends
-        pattern = rf"\b({'|'.join(keys)})\b"
+        pattern = rf"\b(?:{'|'.join(keys)})\b"
     else:
         # Regex pattern that matches any of the keys in the list
-        pattern = rf"({'|'.join(keys)})"
+        pattern = rf"(?:{'|'.join(keys)})"
     return re.compile(pattern, flags = flags)
