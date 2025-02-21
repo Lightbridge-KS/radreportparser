@@ -1,7 +1,7 @@
 """radreportparser - Regex-based text parser for common radiology report"""
 
 # Change to import.metadata when minimum python>=3.8
-from importlib_metadata import version as _version
+from importlib.metadata import version as _version
 
 
 from .extractor import (
