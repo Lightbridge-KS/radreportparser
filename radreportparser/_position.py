@@ -3,7 +3,10 @@ from typing import (
     List,
     Tuple,
 )
-from ._pattern import _pattern_keys
+from ._pattern import (
+    _pattern_keys,
+    _ensure_string
+    )
 
 ## Start Position
 
@@ -15,6 +18,10 @@ def _find_start_position_greedy(
     verbose: bool = True,
 ) -> tuple[int, int]:
     """Helper function to find start position of the section"""
+    
+    # Convert text to string
+    text = _ensure_string(text)
+    
     if keys is None:
         return 0, 0
     # Warn if start pattern appears more than once
@@ -58,6 +65,9 @@ def _find_start_position_greedy_all(
         Returns [(0, 0)] if keys is None.
         Returns [] if no matches found.
     """
+    # Convert text to string
+    text = _ensure_string(text)
+    
     if keys is None:
         return [(0, 0)]
 
@@ -101,6 +111,9 @@ def _find_start_position_sequential(
         Returns (0, 0) if keys is None.
         Returns (-1, -1) if no matches found.
     """
+    # Convert text to string
+    text = _ensure_string(text)
+    
     if keys is None:
         return 0, 0
 
@@ -154,6 +167,9 @@ def _find_start_position_sequential_all(
         Returns [(0, 0)] if keys is None.
         Returns [] if no matches found.
     """
+    # Convert text to string
+    text = _ensure_string(text)
+    
     if keys is None:
         return [(0, 0)]
 
@@ -207,6 +223,9 @@ def _find_end_position_greedy(
     int
         The ending position in the text
     """
+    # Convert text to string
+    text = _ensure_string(text)
+    
     if keys is None:
         return len(text)
     end_match = _pattern_keys(keys, word_boundary, flags).search(text[start_pos:])
@@ -243,6 +262,9 @@ def _find_end_position_sequential(
     int
         The ending position in the text
     """
+    # Convert text to string
+    text = _ensure_string(text)    
+
     if keys is None:
         return len(text)
 

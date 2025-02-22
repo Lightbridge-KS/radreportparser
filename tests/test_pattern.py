@@ -1,4 +1,7 @@
-from radreportparser._pattern import _pattern_keys
+from radreportparser._pattern import (
+    _pattern_keys,
+    _ensure_string,
+)
 import re
 import pytest
 
@@ -49,3 +52,21 @@ def test_pattern_keys_regex():
     assert pattern.search(':')
     assert pattern.search('*')
     assert pattern.search(' ')
+
+def test_type_conversion():
+    # Test with different input types
+    assert _ensure_string("hello") == "hello"  # string
+    assert _ensure_string(123) == "123"        # integer
+    assert _ensure_string(3.14) == "3.14"      # float
+    assert _ensure_string(True) == "True"      # boolean
+    assert _ensure_string(None) == ""          # None
+    
+    # Test with custom object
+    class CustomObj:
+        def __str__(self):
+            return "custom"
+    assert _ensure_string(CustomObj()) == "custom"
+    
+    # Test error case
+    with pytest.raises(TypeError):
+        _ensure_string(object())  # object with no string representation
