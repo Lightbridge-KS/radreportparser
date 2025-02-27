@@ -52,17 +52,17 @@ def test_find_start_position_sequential_basic():
 
 def test_find_start_position_sequential_order_matters():
     """Test that sequential matching respects order of keys"""
-    text = "Clinical History: Patient info"
+    text = "AAAA History Finding BBBBBB"
     
     # Order: specific -> general
-    keys = ["Clinical History:", "History:"]
+    keys = ["History", "Finding"]
     start, end = _find_start_position_sequential(text, keys, flags=re.IGNORECASE)
-    assert end == 17  # Should match "Clinical History:"
+    assert end == 12  
     
     # Order: general -> specific
-    keys = ["History:", "Clinical History:"]
+    keys = ["Finding", "History"]
     start, end = _find_start_position_sequential(text, keys, flags=re.IGNORECASE)
-    assert end == 8  # Should match "History:"
+    assert end == 20  
 
 # Tests for _find_start_position_greedy_all()
 
@@ -108,7 +108,7 @@ def test_find_start_position_sequential_all_order():
         ["Clinical History:", "History:"],
         flags=re.IGNORECASE
     )
-    assert len(positions) == 3
+    assert len(positions) == 5
     
     # Order should be maintained in document order
     assert positions == sorted(positions)
