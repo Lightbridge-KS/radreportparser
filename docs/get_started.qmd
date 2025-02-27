@@ -113,8 +113,14 @@ Before extracting sections, we need to initialize a [`RadReportExtractor()`](`ra
 ```{python}
 from radreportparser import RadReportExtractor
 
-# Initialize extractor with default configuration
+# Initialize extractor with default configuration using build-in `re` module
 extractor = RadReportExtractor()
+```
+
+Alternatively, you can use the [Google `re2` module](https://github.com/google/re2) (must be installed separately) for faster regex processing by specifying the `backend` parameter:
+
+```{python}
+extractor2 = RadReportExtractor(backend="re2")
 ```
 
 
@@ -138,6 +144,11 @@ The [`extract_all()`](`radreportparser.RadReportExtractor.extract_all`) method p
 # Extract all sections from the report
 report = extractor.extract_all(report_text)
 report
+```
+
+```{python}
+# Using `re2` backend
+extractor2.extract_all(report_text)
 ```
 
 The extracted sections can be accessed individually:
@@ -272,6 +283,9 @@ When configuring custom keywords:
 - Order keywords from most to least specific for better matching
 - Remember that matching is case-insensitive by default
 ::::
+
+### Change Regular Expression Backend
+
 
 
 ## Extract Section

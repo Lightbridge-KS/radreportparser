@@ -1,6 +1,5 @@
 """radreportparser - Regex-based text parser for common radiology report"""
 
-# Change to import.metadata when minimum python>=3.8
 from importlib.metadata import version as _version
 
 
@@ -14,7 +13,6 @@ from .section import (
     SectionExtractor
     )
 
-# __version__ = "0.1.0-alpha.1"
 
 
 __all__ = [

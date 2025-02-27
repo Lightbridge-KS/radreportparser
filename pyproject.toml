@@ -41,6 +41,12 @@ docs = [
     "quartodoc",
     "jupyter"
 ]
+re2 = [
+    "google-re2>=1.1",
+]
+all = [
+    "google-re2>=1.1",
+]
 
 [tool.setuptools]
 packages = ["radreportparser"]

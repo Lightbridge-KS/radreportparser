@@ -2,6 +2,7 @@ import re
 from typing import (
     Literal,
     List,
+    Union,
 )
 from ._position import (
     _find_start_position_greedy,
@@ -51,23 +52,17 @@ class SectionExtractor:
     word_boundary : bool, optional
         Whether to wrap word boundary `\b` around the keys.
         Default is True.
-    flags : re.RegexFlag, optional
+    flags : Union[re.RegexFlag, int], optional
         Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
         Default is `re.IGNORECASE`.
     match_strategy : {"greedy", "sequential"}, optional
-        Strategy for matching both start and end keys:
-    
-    "greedy" (default):
-        - Scans text from left to right
-        - Returns first match found for any pattern in keys
-        - Order of patterns in keys list doesn't matter
-        - Faster but less precise when order matters
-    
-    "sequential":
-        - Tries each pattern in keys list in order
-        - Returns first successful match
-        - Order of patterns in keys list matters
-        - More precise but slightly slower
+        Strategy for matching both start and end keys.
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Examples
     --------
@@ -88,14 +83,16 @@ class SectionExtractor:
         end_keys: list[str] | None,
         include_start_keys: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
+        backend: Literal["re", "re2"] = "re",
     ):
         self.start_keys = start_keys
         self.end_keys = end_keys
         self.include_start_keys = include_start_keys
         self.word_boundary = word_boundary
         self.flags = flags
+        self.backend = backend
 
         # Validate match strategy
         match_strategy_options = frozenset({"greedy", "sequential"})
@@ -127,10 +124,11 @@ class SectionExtractor:
             f"{self.__class__.__name__}("
             f"start_keys={start_keys_str}, "
             f"end_keys={end_keys_str}, "
-            f"include_start_keys={self.include_start_keys=}, "
+            f"include_start_keys={self.include_start_keys}, "
             f"word_boundary={self.word_boundary}, "
             f"flags=re.{flags_name}, "
-            f"match_strategy='{self.match_strategy}')"
+            f"match_strategy='{self.match_strategy}', "
+            f"backend='{self.backend}')"
         )
 
     def extract(
@@ -179,6 +177,7 @@ class SectionExtractor:
                 word_boundary=self.word_boundary,
                 flags=self.flags,
                 verbose=verbose,
+                backend=self.backend,
             )
         else:
             start_idx_start, start_idx_end = _find_start_position_sequential(
@@ -187,6 +186,7 @@ class SectionExtractor:
                 word_boundary=self.word_boundary,
                 flags=self.flags,
                 verbose=verbose,
+                backend=self.backend,
             )
 
         if start_idx_start == -1:  # No start match found
@@ -200,6 +200,7 @@ class SectionExtractor:
                 start_idx_start,
                 word_boundary=self.word_boundary,
                 flags=self.flags,
+                backend=self.backend,
             )
         else:
             end_idx = _find_end_position_sequential(
@@ -208,6 +209,7 @@ class SectionExtractor:
                 start_idx_start,
                 word_boundary=self.word_boundary,
                 flags=self.flags,
+                backend=self.backend,
             )
 
         # Extract the section
@@ -256,14 +258,16 @@ class SectionExtractor:
                 text, 
                 self.start_keys, 
                 self.word_boundary, 
-                self.flags
+                self.flags,
+                backend=self.backend,
             )
         else:
             start_positions = _find_start_position_sequential_all(
                 text, 
                 self.start_keys, 
                 self.word_boundary, 
-                self.flags
+                self.flags,
+                backend=self.backend,
             )
 
         if not start_positions:
@@ -280,7 +284,8 @@ class SectionExtractor:
                     self.end_keys, 
                     start_idx_start, 
                     self.word_boundary, 
-                    self.flags
+                    self.flags,
+                    backend=self.backend,
                 )
             else:
                 end_idx = _find_end_position_sequential(
@@ -288,7 +293,8 @@ class SectionExtractor:
                     self.end_keys, 
                     start_idx_start, 
                     self.word_boundary, 
-                    self.flags
+                    self.flags,
+                    backend=self.backend,
                 )
 
             # Extract the section
