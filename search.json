@@ -1,0 +1,569 @@
+[
+  {
+    "objectID": "reference/extract_findings.html",
+    "href": "reference/extract_findings.html",
+    "title": "extract_findings",
+    "section": "",
+    "text": "RadReportExtractor.extract_findings(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the findings section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted findings section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_findings"
+    ]
+  },
+  {
+    "objectID": "reference/extract_findings.html#parameters",
+    "href": "reference/extract_findings.html#parameters",
+    "title": "extract_findings",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_findings"
+    ]
+  },
+  {
+    "objectID": "reference/extract_findings.html#returns",
+    "href": "reference/extract_findings.html#returns",
+    "title": "extract_findings",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted findings section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_findings"
+    ]
+  },
+  {
+    "objectID": "reference/extract_title.html",
+    "href": "reference/extract_title.html",
+    "title": "extract_title",
+    "section": "",
+    "text": "RadReportExtractor.extract_title(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the title section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted title section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_title"
+    ]
+  },
+  {
+    "objectID": "reference/extract_title.html#parameters",
+    "href": "reference/extract_title.html#parameters",
+    "title": "extract_title",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_title"
+    ]
+  },
+  {
+    "objectID": "reference/extract_title.html#returns",
+    "href": "reference/extract_title.html#returns",
+    "title": "extract_title",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted title section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_title"
+    ]
+  },
+  {
+    "objectID": "reference/extract_history.html",
+    "href": "reference/extract_history.html",
+    "title": "extract_history",
+    "section": "",
+    "text": "RadReportExtractor.extract_history(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the history/indication section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted history section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_history"
+    ]
+  },
+  {
+    "objectID": "reference/extract_history.html#parameters",
+    "href": "reference/extract_history.html#parameters",
+    "title": "extract_history",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_history"
+    ]
+  },
+  {
+    "objectID": "reference/extract_history.html#returns",
+    "href": "reference/extract_history.html#returns",
+    "title": "extract_history",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted history section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_history"
+    ]
+  },
+  {
+    "objectID": "reference/SectionExtractor.html",
+    "href": "reference/SectionExtractor.html",
+    "title": "SectionExtractor",
+    "section": "",
+    "text": "SectionExtractor(\n    self,\n    start_keys: list[str] | None,\n    end_keys: list[str] | None,\n    include_start_keys: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    backend: Literal['re', 're2'] = 're',\n)\nExtract sections from text based on start and end keys.\nThis class provides functionality to extract sections of text that begin with any of the start keys and end just before any of the end keys (i.e., not include the end keys).\nmatch_strategy: Strategy for matching both start and end keys:",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Section Extractor",
+      "SectionExtractor"
+    ]
+  },
+  {
+    "objectID": "reference/SectionExtractor.html#parameters",
+    "href": "reference/SectionExtractor.html#parameters",
+    "title": "SectionExtractor",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nstart_keys\nlist[str] | None\nList of possible section start markers as regular expression. If None, the section will be extracted from the beginning of the text.\nrequired\n\n\nend_keys\nlist[str] | None\nList of possible section end markers as regular expression. The end_key will not be included in the extracted section. If None, the section will be extracted until the end of the text.\nrequired\n\n\ninclude_start_keys\nbool\nWhether to include the start key in the extracted section. Default is True.\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the keys. Default is True.\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties Default is re.IGNORECASE.\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching both start and end keys.\n\"greedy\"\n\n\nbackend\n(re, re2)\nRegex backend to use: - “re”: Standard Python regex engine (default) - “re2”: Google’s RE2 engine (must be installed)\n\"re\"",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Section Extractor",
+      "SectionExtractor"
+    ]
+  },
+  {
+    "objectID": "reference/SectionExtractor.html#examples",
+    "href": "reference/SectionExtractor.html#examples",
+    "title": "SectionExtractor",
+    "section": "Examples",
+    "text": "Examples\n\nfrom radreportparser import SectionExtractor\n# Create an extractor for finding text between headers\nextractor = SectionExtractor(\n    start_keys=[\"FINDINGS:\"],\n    end_keys=[\"IMPRESSION:\", \"CONCLUSION:\"]\n)\nprint(extractor)\n\nSectionExtractor(start_keys=['FINDINGS:'], end_keys=['IMPRESSION:', 'CONCLUSION:'], include_start_keys=True, word_boundary=False, flags=re.IGNORECASE, match_strategy='greedy', backend='re')",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Section Extractor",
+      "SectionExtractor"
+    ]
+  },
+  {
+    "objectID": "reference/SectionExtractor.html#methods",
+    "href": "reference/SectionExtractor.html#methods",
+    "title": "SectionExtractor",
+    "section": "Methods",
+    "text": "Methods\n\n\n\nName\nDescription\n\n\n\n\nextract\nExtract a section from the text using configured patterns.\n\n\nextract_all\nExtract all sections from the text that match the configured patterns.\n\n\n\n\nextract\nSectionExtractor.extract(text: str, verbose: bool = True)\nExtract a section from the text using configured patterns.\nExtract a section from text if any of start_keys matches. If multiple start_keys matches are found in text, return section from the first match. The matching strategy is controlled by match_strategy argument in the initialization of SectionExtractor()\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input text to extract section from.\nrequired\n\n\nverbose\nbool\nIf true and there are more than one position of text that matches the start_keys, print message to standard output.\nTrue\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted section text. Returns empty string if section not found.\n\n\n\n\n\nExamples\n\n# Create an extractor for finding text\nfrom radreportparser import SectionExtractor\nextractor = SectionExtractor(\n    start_keys=[\"FINDINGS:\"],\n    end_keys=[\"IMPRESSION:\"]\n)\n# Extract section from text\ntext = \"FINDINGS: Normal. IMPRESSION: Clear.\"\nsection = extractor.extract(text)\nprint(section)\n\nFINDINGS: Normal.\n\n\n\n\n\nextract_all\nSectionExtractor.extract_all(text: str)\nExtract all sections from the text that match the configured patterns.\nExtract one or more section(s) from text if any of start_keys matches. The matching strategy is controlled by match_strategy argument in the initialization of SectionExtractor().\n\nParameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input text to extract sections from\nrequired\n\n\n\n\n\nReturns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nList[str]\nList of extracted section texts. Returns empty list if no sections found.\n\n\n\n\n\nExamples\n\n# Create an extractor for finding text\nfrom radreportparser import SectionExtractor\nextractor = SectionExtractor(\n    start_keys=[\"FINDING:\"],\n    end_keys=[\"IMPRESSION:\"]\n)\ntext = '''\nFINDING: First observation\nIMPRESSION: OK\nFINDING: Second observation\nIMPRESSION: Also OK\n'''\nsections = extractor.extract_all(text)\nprint(sections)\n\n['FINDING: First observation', 'FINDING: Second observation']",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Section Extractor",
+      "SectionExtractor"
+    ]
+  },
+  {
+    "objectID": "reference/KeyWord.html",
+    "href": "reference/KeyWord.html",
+    "title": "KeyWord",
+    "section": "",
+    "text": "KeyWord()\nSection Keywords for Radiology Reports.\nAn enumeration class representing different sections commonly found in radiology reports. Each enum member contains a list of regular expressions used to match section headers.",
+    "crumbs": [
+      "Reference",
+      "Section Keyword",
+      "KeyWord"
+    ]
+  },
+  {
+    "objectID": "reference/KeyWord.html#parameters",
+    "href": "reference/KeyWord.html#parameters",
+    "title": "KeyWord",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nNone\n\n\nrequired",
+    "crumbs": [
+      "Reference",
+      "Section Keyword",
+      "KeyWord"
+    ]
+  },
+  {
+    "objectID": "reference/KeyWord.html#attributes",
+    "href": "reference/KeyWord.html#attributes",
+    "title": "KeyWord",
+    "section": "Attributes",
+    "text": "Attributes\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\nHISTORY\nlist of str\nRegular expressions for history/indication sections: - Standalone “history” - “indication(s)” - “clinical history” - “clinical indication(s)”\n\n\nTECHNIQUE\nlist of str\nRegular expressions for technique sections: - “technique(s)”\n\n\nCOMPARISON\nlist of str\nRegular expressions for comparison sections: - “comparison(s)”\n\n\nFINDINGS\nlist of str\nRegular expressions for findings sections: - “finding(s)”\n\n\nIMPRESSION\nlist of str\nRegular expressions for impression sections: - “impression(s)”\n\n\nFOOTER\nlist of str\nRegular expressions for footer sections: - “Report Severity” - “Finalized Datetime” - “Preliminary Datetime”",
+    "crumbs": [
+      "Reference",
+      "Section Keyword",
+      "KeyWord"
+    ]
+  },
+  {
+    "objectID": "reference/KeyWord.html#notes",
+    "href": "reference/KeyWord.html#notes",
+    "title": "KeyWord",
+    "section": "Notes",
+    "text": "Notes\n\nPatterns use [^\\w\\n]* to match non-word/non-newline characters before/after keywords\ns? makes pluralization optional (e.g. “finding” or “findings”)",
+    "crumbs": [
+      "Reference",
+      "Section Keyword",
+      "KeyWord"
+    ]
+  },
+  {
+    "objectID": "reference/KeyWord.html#examples",
+    "href": "reference/KeyWord.html#examples",
+    "title": "KeyWord",
+    "section": "Examples",
+    "text": "Examples\n\nfrom radreportparser import KeyWord\n# Get regex patterns for history section\nKeyWord.HISTORY.value\n\n['[^\\\\w\\\\n]*History[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*Indications?[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*clinical\\\\s+history[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*clinical\\\\s+indications?[^\\\\w\\\\n]*']\n\n\n\n# Technique section\nKeyWord.TECHNIQUE.value\n\n['[^\\\\w\\\\n]*Techniques?[^\\\\w\\\\n]*']\n\n\n\n# Comparison section\nKeyWord.COMPARISON.value\n\n['[^\\\\w\\\\n]*Comparisons?[^\\\\w\\\\n]*']\n\n\n\n# Findings section\nKeyWord.FINDINGS.value\n\n['[^\\\\w\\\\n]*Findings?[^\\\\w\\\\n]*']\n\n\n\n# Impression section\nKeyWord.IMPRESSION.value\n\n['[^\\\\w\\\\n]*Impressions?[^\\\\w\\\\n]*']\n\n\n\n# Footer section\nKeyWord.FOOTER.value\n\n['[^\\\\w\\\\n]*Report Severity[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*Finalized Datetime[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*Preliminary Datetime[^\\\\w\\\\n]*']",
+    "crumbs": [
+      "Reference",
+      "Section Keyword",
+      "KeyWord"
+    ]
+  },
+  {
+    "objectID": "reference/index.html",
+    "href": "reference/index.html",
+    "title": "radreportparser",
+    "section": "",
+    "text": "Class to represent radiology report\n\n\n\nRadReport\nA dataclass representing a radiology report\n\n\n\n\n\n\nKeyword to mark the beginning of section\n\n\n\nKeyWord\nSection Keywords for Radiology Reports.\n\n\n\n\n\n\n\n\nExtract fields from radiology report\n\n\n\nextract_all\nExtract all sections from the radiology report text.\n\n\nextract_title\nExtract the title section from the radiology report text.\n\n\nextract_history\nExtract the history/indication section from the radiology report text.\n\n\nextract_technique\nExtract the technique section from the radiology report text.\n\n\nextract_comparison\nExtract the comparison section from the radiology report text.\n\n\nextract_findings\nExtract the findings section from the radiology report text.\n\n\nextract_impression\nExtract the impression section from the radiology report text.\n\n\n\n\n\n\nExtract text based on section start & end keywords\n\n\n\nSectionExtractor\nExtract sections from text based on start and end keys.",
+    "crumbs": [
+      "Reference",
+      "radreportparser"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#report-class",
+    "href": "reference/index.html#report-class",
+    "title": "radreportparser",
+    "section": "",
+    "text": "Class to represent radiology report\n\n\n\nRadReport\nA dataclass representing a radiology report",
+    "crumbs": [
+      "Reference",
+      "radreportparser"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#section-keyword",
+    "href": "reference/index.html#section-keyword",
+    "title": "radreportparser",
+    "section": "",
+    "text": "Keyword to mark the beginning of section\n\n\n\nKeyWord\nSection Keywords for Radiology Reports.",
+    "crumbs": [
+      "Reference",
+      "radreportparser"
+    ]
+  },
+  {
+    "objectID": "reference/index.html#extract",
+    "href": "reference/index.html#extract",
+    "title": "radreportparser",
+    "section": "",
+    "text": "Extract fields from radiology report\n\n\n\nextract_all\nExtract all sections from the radiology report text.\n\n\nextract_title\nExtract the title section from the radiology report text.\n\n\nextract_history\nExtract the history/indication section from the radiology report text.\n\n\nextract_technique\nExtract the technique section from the radiology report text.\n\n\nextract_comparison\nExtract the comparison section from the radiology report text.\n\n\nextract_findings\nExtract the findings section from the radiology report text.\n\n\nextract_impression\nExtract the impression section from the radiology report text.\n\n\n\n\n\n\nExtract text based on section start & end keywords\n\n\n\nSectionExtractor\nExtract sections from text based on start and end keys.",
+    "crumbs": [
+      "Reference",
+      "radreportparser"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "RadReportParser",
+    "section": "",
+    "text": "radreportparser is a Python package that helps you extract structured information from free-text radiology reports using regular expressions."
+  },
+  {
+    "objectID": "index.html#features",
+    "href": "index.html#features",
+    "title": "RadReportParser",
+    "section": "Features",
+    "text": "Features\n\n📋 Extract common radiology report sections 1\n\nIncluded: Title, History, Technique, Comparison, Findings, and Impression\n\n🔍 Flexible pattern matching with customizable section markers\n🔄 Convert extracted sections to Python dictionaries or JSON"
+  },
+  {
+    "objectID": "index.html#installation",
+    "href": "index.html#installation",
+    "title": "RadReportParser",
+    "section": "Installation",
+    "text": "Installation\nInstall the development version from GitHub:\npython -m pip install git+https://github.com/Lightbridge-KS/radreportparser"
+  },
+  {
+    "objectID": "index.html#quick-start",
+    "href": "index.html#quick-start",
+    "title": "RadReportParser",
+    "section": "Quick Start",
+    "text": "Quick Start\n\nExtract Report\nHere’s a simple example of extracting sections from a radiology report:\n\nfrom radreportparser import RadReportExtractor\n\n# Sample brain CT report (note the markdown formatting)\nreport_text = \"\"\"\nEMERGENCY MDCT OF THE BRAIN\n\n**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\n\nTECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal reconstructions.\n\n*Comparison:* None.\n\nFindings:\n\nThe brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.\n\n=== IMPRESSION ===\n\n- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\n\"\"\"\n\n# Initialize extractor and parse the report\nextractor = RadReportExtractor()\nreport = extractor.extract_all(report_text)\nreport\n\nRadReport(title='EMERGENCY MDCT OF THE BRAIN', history='A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.', technique='Axial helical scan of the brain performed with coronal and sagittal reconstructions.', comparison='None.', findings='The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.', impression='- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.')\n\n\nAccess individual sections:\n\nprint(report.history)\n\nA 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\n\n\n\n\nConvert to dictionary or JSON\n\nreport.to_dict()\n\n{'title': 'EMERGENCY MDCT OF THE BRAIN',\n 'history': 'A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.',\n 'technique': 'Axial helical scan of the brain performed with coronal and sagittal reconstructions.',\n 'comparison': 'None.',\n 'findings': 'The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.',\n 'impression': '- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.'}\n\n\n\nprint(report.to_json(indent = 2)) # pretty-printed\n\n{\n  \"title\": \"EMERGENCY MDCT OF THE BRAIN\",\n  \"history\": \"A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\",\n  \"technique\": \"Axial helical scan of the brain performed with coronal and sagittal reconstructions.\",\n  \"comparison\": \"None.\",\n  \"findings\": \"The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.\",\n  \"impression\": \"- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\"\n}\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\nThe pattern matching mechanism can extract sections from text with plain text or markdown formatting."
+  },
+  {
+    "objectID": "index.html#learn-more",
+    "href": "index.html#learn-more",
+    "title": "RadReportParser",
+    "section": "Learn More",
+    "text": "Learn More\n\nCheck out our Getting Started Guide for a detailed tutorial\nBrowse the Reference for detailed function documentation"
+  },
+  {
+    "objectID": "index.html#footnotes",
+    "href": "index.html#footnotes",
+    "title": "RadReportParser",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nThe “common” radiology report section were based on author experience in our institution.↩︎"
+  },
+  {
+    "objectID": "get_started.html",
+    "href": "get_started.html",
+    "title": "Get Started with RadReportParser",
+    "section": "",
+    "text": "Understanding the structure of radiology reports is essential for effective text extraction. This section explains how radreportparser models and processes radiology report text.\n\n\nA radiology report typically consists of several distinct sections, each serving a specific purpose in communicating the radiological findings. radreportparser uses a section-based parsing approach, where:\n\nEach section is identified by a section keyword (e.g., “HISTORY:”, “FINDINGS:”)\nSection content extends from its keyword until the next section keyword\nSections are non-overlapping and sequential\n\nThe typical section of radiology report 1 follows the structure in Figure 1:\n\n\n\n\n\n\nFigure 1: Radiology Report Anatomy\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nSection order can vary between institutions and report types. radreportparser is designed to handle flexible section ordering.\n\n\n\n\n\nradreportparser uses the RadReport dataclass to represent structured report data. This class provides:\n\nType-safe section storage\nEasy access to individual sections\nConversion to standard data formats\n\nHere’s an example of working with the RadReport class:\n\nfrom radreportparser import RadReport\n\n# Create a RadReport instance\nreport = RadReport(\n    title=\"EMERGENCY MDCT OF THE BRAIN\",\n    history=\"A 25-year-old female presents with headache...\",\n    technique=\"Axial helical scan of the brain...\",\n    findings=\"The brain shows age-appropriate volume...\",\n    impression=\"No intracranial hemorrhage...\"\n)\n\n# Display the report object\nreport\n\nRadReport(title='EMERGENCY MDCT OF THE BRAIN', history='A 25-year-old female presents with headache...', technique='Axial helical scan of the brain...', comparison=None, findings='The brain shows age-appropriate volume...', impression='No intracranial hemorrhage...')\n\n\nEach section can be accessed as an attribute:\n\nreport.title\n\n'EMERGENCY MDCT OF THE BRAIN'\n\n\n\n# Sections that weren't specified return None\ntype(report.comparison)\n\nNoneType\n\n\nThe RadReport class supports serialization to both Python dictionaries and JSON format:\nConvert to python dictonary:\n\nreport.to_dict()\n\n{'title': 'EMERGENCY MDCT OF THE BRAIN',\n 'history': 'A 25-year-old female presents with headache...',\n 'technique': 'Axial helical scan of the brain...',\n 'comparison': None,\n 'findings': 'The brain shows age-appropriate volume...',\n 'impression': 'No intracranial hemorrhage...'}\n\n\nConvert to JSON object:\n\nprint(report.to_json(indent = 2))\n\n{\n  \"title\": \"EMERGENCY MDCT OF THE BRAIN\",\n  \"history\": \"A 25-year-old female presents with headache...\",\n  \"technique\": \"Axial helical scan of the brain...\",\n  \"comparison\": null,\n  \"findings\": \"The brain shows age-appropriate volume...\",\n  \"impression\": \"No intracranial hemorrhage...\"\n}\n\n\n\n\n\n\n\n\nTip\n\n\n\n\n\nUse to_dict(exclude_none=True) or to_json(exclude_none=True) to omit empty sections from the output."
+  },
+  {
+    "objectID": "get_started.html#anatomy-of-radiology-report",
+    "href": "get_started.html#anatomy-of-radiology-report",
+    "title": "Get Started with RadReportParser",
+    "section": "",
+    "text": "Understanding the structure of radiology reports is essential for effective text extraction. This section explains how radreportparser models and processes radiology report text.\n\n\nA radiology report typically consists of several distinct sections, each serving a specific purpose in communicating the radiological findings. radreportparser uses a section-based parsing approach, where:\n\nEach section is identified by a section keyword (e.g., “HISTORY:”, “FINDINGS:”)\nSection content extends from its keyword until the next section keyword\nSections are non-overlapping and sequential\n\nThe typical section of radiology report 1 follows the structure in Figure 1:\n\n\n\n\n\n\nFigure 1: Radiology Report Anatomy\n\n\n\n\n\n\n\n\n\nNote\n\n\n\nSection order can vary between institutions and report types. radreportparser is designed to handle flexible section ordering.\n\n\n\n\n\nradreportparser uses the RadReport dataclass to represent structured report data. This class provides:\n\nType-safe section storage\nEasy access to individual sections\nConversion to standard data formats\n\nHere’s an example of working with the RadReport class:\n\nfrom radreportparser import RadReport\n\n# Create a RadReport instance\nreport = RadReport(\n    title=\"EMERGENCY MDCT OF THE BRAIN\",\n    history=\"A 25-year-old female presents with headache...\",\n    technique=\"Axial helical scan of the brain...\",\n    findings=\"The brain shows age-appropriate volume...\",\n    impression=\"No intracranial hemorrhage...\"\n)\n\n# Display the report object\nreport\n\nRadReport(title='EMERGENCY MDCT OF THE BRAIN', history='A 25-year-old female presents with headache...', technique='Axial helical scan of the brain...', comparison=None, findings='The brain shows age-appropriate volume...', impression='No intracranial hemorrhage...')\n\n\nEach section can be accessed as an attribute:\n\nreport.title\n\n'EMERGENCY MDCT OF THE BRAIN'\n\n\n\n# Sections that weren't specified return None\ntype(report.comparison)\n\nNoneType\n\n\nThe RadReport class supports serialization to both Python dictionaries and JSON format:\nConvert to python dictonary:\n\nreport.to_dict()\n\n{'title': 'EMERGENCY MDCT OF THE BRAIN',\n 'history': 'A 25-year-old female presents with headache...',\n 'technique': 'Axial helical scan of the brain...',\n 'comparison': None,\n 'findings': 'The brain shows age-appropriate volume...',\n 'impression': 'No intracranial hemorrhage...'}\n\n\nConvert to JSON object:\n\nprint(report.to_json(indent = 2))\n\n{\n  \"title\": \"EMERGENCY MDCT OF THE BRAIN\",\n  \"history\": \"A 25-year-old female presents with headache...\",\n  \"technique\": \"Axial helical scan of the brain...\",\n  \"comparison\": null,\n  \"findings\": \"The brain shows age-appropriate volume...\",\n  \"impression\": \"No intracranial hemorrhage...\"\n}\n\n\n\n\n\n\n\n\nTip\n\n\n\n\n\nUse to_dict(exclude_none=True) or to_json(exclude_none=True) to omit empty sections from the output."
+  },
+  {
+    "objectID": "get_started.html#extract-report",
+    "href": "get_started.html#extract-report",
+    "title": "Get Started with RadReportParser",
+    "section": "Extract Report",
+    "text": "Extract Report\nThe RadReportExtractor class provides high-level methods for extracting structured sections from radiology report text. Let’s walk through the extraction process using a sample report:\n\n# Sample brain CT report (with markdown formatting)\nreport_text = \"\"\"\nEMERGENCY MDCT OF THE BRAIN\n\n**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\n\nTECHNIQUE: Axial helical scan of the brain performed with coronal and sagittal reconstructions.\n\n*Comparison:* None.\n\nFindings:\n\nThe brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.\n\n=== IMPRESSION ===\n\n- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\n\"\"\"\n\n\nInitializing the Extractor\nBefore extracting sections, we need to initialize a RadReportExtractor() instance:\n\nfrom radreportparser import RadReportExtractor, is_re2_available\n\n# Initialize extractor with default configuration using build-in `re` module\nextractor = RadReportExtractor()\n\nAlternatively, you can use the Google re2 module (must be installed separately) for faster regex processing by specifying the backend parameter:\n\nif is_re2_available():\n    extractor2 = RadReportExtractor(backend=\"re2\")\n\nThe RadReportExtractor() uses section keywords to identify the start of each section. These keywords are defined as regular expressions and can be customized during initialization using the keys_* parameters.\nThe default keywords are defined in the KeyWord enum:\n\nfrom radreportparser import KeyWord\n\n# Example: inspect default keywords for the history section\nKeyWord.HISTORY.value\n\n['[^\\\\w\\\\n]*History[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*Indications?[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*clinical\\\\s+history[^\\\\w\\\\n]*',\n '[^\\\\w\\\\n]*clinical\\\\s+indications?[^\\\\w\\\\n]*']\n\n\n\n\nExtract All Sections\nThe extract_all() method provides a convenient way to extract all sections at once. It returns a RadReport instance containing the structured data:\n\n# Extract all sections from the report\nreport = extractor.extract_all(report_text)\nreport\n\nRadReport(title='EMERGENCY MDCT OF THE BRAIN', history='A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.', technique='Axial helical scan of the brain performed with coronal and sagittal reconstructions.', comparison='None.', findings='The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.', impression='- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.')\n\n\n\n# Using `re2` backend\nif is_re2_available():\n    print(extractor2.extract_all(report_text))\n\nThe extracted sections can be accessed individually:\n\n# Access specific sections\nprint(\"Title:\", report.title)\nprint(\"\\nHistory:\", report.history)\n\nTitle: EMERGENCY MDCT OF THE BRAIN\n\nHistory: A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\n\n\nThe RadReport instance can be easily converted to standard data formats:\n\n# Convert to Python dictionary\nreport.to_dict()\n\n{'title': 'EMERGENCY MDCT OF THE BRAIN',\n 'history': 'A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.',\n 'technique': 'Axial helical scan of the brain performed with coronal and sagittal reconstructions.',\n 'comparison': 'None.',\n 'findings': 'The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.',\n 'impression': '- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.'}\n\n\n\n# Convert to JSON (pretty-printed)\nprint(report.to_json(indent = 2))\n\n{\n  \"title\": \"EMERGENCY MDCT OF THE BRAIN\",\n  \"history\": \"A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\",\n  \"technique\": \"Axial helical scan of the brain performed with coronal and sagittal reconstructions.\",\n  \"comparison\": \"None.\",\n  \"findings\": \"The brain shows age-appropriate volume with normal parenchymal attenuation and gray-white differentiation. No acute infarction or hemorrhage identified. The ventricles are normal in size without intraventricular hemorrhage. No extra-axial collection, midline shift, or brain herniation. The vascular structures appear normal. The calvarium and skull base show no fracture. Visualized paranasal sinuses, mastoids, and upper cervical spine are unremarkable.\",\n  \"impression\": \"- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\"\n}\n\n\n\n\n\n\n\n\nTip\n\n\n\n\n\nThe extract_all() method accepts these parameters:\n\ninclude_key: Whether to include section keywords in output (default: False)\nword_boundary: Whether to use word boundaries in pattern matching (default: False)\n\n\n\n\n\n\nExtract Individual Section\nYou can also extract specific sections using individual methods like extract_history(), extract_findings(), etc. These methods provide more control over extraction parameters.\nFor example, to extract just the history section:\n\n# Include section keyword (default)\nextractor.extract_history(report_text)\n\n'**HISTORY:** A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.'\n\n\n\nKeyword Inclusion\nYou can control whether the section keyword is included in the output using the include_key parameter.\n\n# Exclude section Keyword\nextractor.extract_history(report_text, include_key=False)\n\n'A 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.'\n\n\n\n\nMatch Strategy\nThe match_strategy parameter controls how “next section keyword” of each section boundaries are determined.\n\n# Sample report with ambiguous sections\nreport_reversed = \"\"\"\nHISTORY: Patient with cough 2 days ago\nIMPRESSION: Unremarkable\nFINDINGS: Normal findings\n\"\"\"\n\n“greedy” strategy (default)\n\nThis stretegy mark the ending of each section by reaching any of the “next section keywords”.\n\n\nextractor.extract_history(report_reversed, match_strategy=\"greedy\")\n\n'HISTORY: Patient with cough 2 days ago'\n\n\n‘sequential’ strategy\n\nThis stretegy mark the ending of each section by checking each “next section keywords” list sequentially.\n\n\nextractor.extract_history(report_reversed, match_strategy=\"sequential\")\n\n'HISTORY: Patient with cough 2 days ago\\nIMPRESSION: Unremarkable'\n\n\nSince the keywords for “KeyWord.FINDINGS” comes before that of KeyWord.IMPRESSION, the end of “history” section would terminate just before the “KeyWord.FINDINGS” matched.\n\n\n\nManually Configure Section Keywords\nYou can customize the RadReportExtractor() to match different report formats by providing your own section keywords. This is particularly useful when working with institution-specific report templates.\nHere’s an example using a chest radiograph report format:\n\n# Sample chest X-ray report\nchest_xray_text = \"\"\"\nCHEST RADIOGRAPH\n\nCLINICAL INFORMATION: 65-year-old with productive cough\n\nPROCEDURE: PA and lateral chest radiograph\n\nDESCRIPTION:\n- Clear lung fields bilaterally\n- Normal cardiac silhouette\n- No pleural effusion\n\nCONCLUSION:\n1. Normal chest radiograph\n\"\"\"\n\n# Custom section keywords for chest X-ray reports\nextractor_custom = RadReportExtractor(\n    keys_history=[\"CLINICAL INFORMATION:\", \"INDICATION:\"],\n    keys_technique=[\"PROCEDURE:\", \"EXAMINATION:\"],\n    keys_findings=[\"FINDINGS:\", \"DESCRIPTION:\"],\n    keys_impression=[\"CONCLUSION:\", \"IMPRESSION:\"]\n)\n\n# Extract sections using custom configuration\nchest_report = extractor_custom.extract_all(chest_xray_text)\nchest_report\n\nRadReport(title='CHEST RADIOGRAPH', history='65-year-old with productive cough', technique='PA and lateral chest radiograph', comparison='', findings='- Clear lung fields bilaterally\\n- Normal cardiac silhouette\\n- No pleural effusion', impression='1. Normal chest radiograph')\n\n\n\nchest_report.history\n\n'65-year-old with productive cough'\n\n\n\nchest_report.impression\n\n'1. Normal chest radiograph'\n\n\n\n\n\n\n\n\nTip\n\n\n\n\n\nWhen configuring custom keywords:\n\nUse variations of section headers commonly seen in your reports\nOrder keywords from most to least specific for better matching\nRemember that matching is case-insensitive by default\n\n\n\n\n\n\nChange Regular Expression Backend"
+  },
+  {
+    "objectID": "get_started.html#extract-section",
+    "href": "get_started.html#extract-section",
+    "title": "Get Started with RadReportParser",
+    "section": "Extract Section",
+    "text": "Extract Section\nWhile the RadReportExtractor()class is designed specifically for radiology reports, radreportparser also provides a more generic text extraction functionality through the SectionExtractor class, which can extract text sections from any document using custom start and end markers.\n\nBasic Usage\nThe SectionExtractor class requires:\n\nstart_keys: A list of possible starting keywords, each one represented by Python regular expression.\nend_keys: A list of possible ending keywords (exclusive), each one represented by Python regular expression.\n\nThe SectionExtractor extract text from the start_keys and unitil (but not include) the end_keys.\nHere’s a simple example with a radiology report:\n\nfrom radreportparser import SectionExtractor\n\n# Sample radiology text\nrad_text = \"\"\"\nFINDINGS: Normal chest CT\nIMPRESSION: No acute abnormality\n\"\"\"\n\n# Create extractor for findings section\nfindings_extractor = SectionExtractor(\n    start_keys=[\"FINDINGS:\"],\n    end_keys=[\"IMPRESSION:\"]\n)\n\n# Extract findings\nfindings = findings_extractor.extract(rad_text)\nprint(findings)\n\nFINDINGS: Normal chest CT\n\n\n\n\nFlexible Text Extraction\nThe class’s flexibility makes it useful for parsing various medical documents. Here is an example for pathology report\n\npath_text = \"\"\"\n**SPECIMEN:** Right breast core biopsy\n\n**GROSS DESCRIPTION:** Three cores of tan-white tissue\n**MICROSCOPIC EXAMINATION:** \n\n- The specimen shows normal breast tissue with fibrous stroma\n\n== DIAGNOSIS ==\n- Benign breast tissue\n- No evidence of malignancy\n\"\"\"\n\n# Create extractor for microscopic examination\nmicro_extractor = SectionExtractor(\n    start_keys=[r\"(:?\\W*)MICROSCOPIC EXAMINATION(:?\\W*)\"],\n    end_keys=[r\"(:?\\W*)DIAGNOSIS(:?\\W*)\"],\n    include_start_keys = False\n)\n# Extract microscopic section\nmicro = micro_extractor.extract(path_text)\nprint(micro)\n\nThe specimen shows normal breast tissue with fibrous stroma\n\n\n\n\n\n\n\n\nNote\n\n\n\n\n\n\nThe \\W* regex pattern is used here to match zero or more non-word character (see re for python regular expression).\ninclude_start_keys = False to exclude start_keys\n\n\n\n\n\n\nExtract All Sections\nextract_all() method can be used to extract one or more sections that any of start_keys matches.\n\nconversation_text = \"\"\"\nHuman: Hi\n\nAI: Hello, How can I help you?\n\nHuman:\n- What is 1+1\n- Think step-by-step\n\nAI: \n1 + 1 = 2\nAnswer: 2\n\"\"\"\n\nhuman_section_extractor = SectionExtractor(\n    start_keys=[\"human:\"],\n    end_keys=[\"AI:\"],\n    include_start_keys = False\n)\n\n# Extract all section that match `start_keys`\nhuman_section_extractor.extract_all(conversation_text)\n\n['Hi', '- What is 1+1\\n- Think step-by-step']\n\n\n\n\nAdvanced Features\n\nMultiple Start/End Keys\nYou can provide multiple possible section markers:\n\n# Multiple ways to mark findings sections\nclinical_note = \"\"\"\n=== OBSERVATIONS ===\nPatient appears well\n\n=== ASSESSMENT ===\nNormal exam\n\"\"\"\n\nclincal_extractor = SectionExtractor(\n    start_keys=[r\"(?:\\W*)FINDINGS(?:\\W*)\", r\"(?:\\W*)OBSERVATIONS(?:\\W*)\"],\n    end_keys=[r\"(?:\\W*)PLAN(?:\\W*)\", r\"(?:\\W*)ASSESSMENT(?:\\W*)\"],\n    include_start_keys = False\n)\nclincal_extractor.extract(clinical_note)\n\n'Patient appears well'\n\n\n\n\nWord Boundaries\nUse word_boundary=True for more precise matching:\n\ntext = \"\"\"\nFINDING Normal\nIMPRESSION Abnormal\n\"\"\"\n\n# Without word boundaries\nextractor_no_boundary = SectionExtractor(\n    start_keys=[\"FINDING\"],\n    end_keys=[\"IMP\"],\n    word_boundary=False\n)\nextractor_no_boundary.extract(text)\n\n'FINDING Normal'\n\n\n\n# With word boundaries\nextractor_with_boundary = SectionExtractor(\n    start_keys=[\"FINDING\"],\n    end_keys=[\"IMP\"],\n    word_boundary=True\n)\n# No match for `end_keys` \nextractor_with_boundary.extract(text)\n\n'FINDING Normal\\nIMPRESSION Abnormal'\n\n\n\n\nMatch Strategy Control\nChoose between ‘greedy’ and ‘sequential’ matching:\n\ntext = \"\"\"\nOBSERVATION: None \nFINDING: Unremarkable\nASSESSMENT: Stable\nNOTES: Continue monitoring\n\"\"\"\n\nGreedy matching (default):\n\nSection ends by matching any of the start_keys or end_keys\n\n\nextractor_greedy = SectionExtractor(\n    start_keys=[\"FINDING:\", \"OBSERVATION:\"],\n    end_keys=[\"NOTES:\", \"ASSESSMENT:\"],\n    match_strategy=\"greedy\"\n)\nextractor_greedy.extract(text)\n\n'OBSERVATION: None \\nFINDING: Unremarkable'\n\n\nSequential matching:\n\nSection ends by matching the start_keys or end_keys sequentially\n\n\nextractor_sequential = SectionExtractor(\n    start_keys=[\"FINDING:\", \"OBSERVATION:\"],\n    end_keys=[\"NOTES:\", \"ASSESSMENT:\"],\n    match_strategy=\"sequential\"\n)\nextractor_sequential.extract(text)\n\n'FINDING: Unremarkable\\nASSESSMENT: Stable'"
+  },
+  {
+    "objectID": "get_started.html#footnotes",
+    "href": "get_started.html#footnotes",
+    "title": "Get Started with RadReportParser",
+    "section": "Footnotes",
+    "text": "Footnotes\n\n\nAccording to the experience of an author of this package.↩︎"
+  },
+  {
+    "objectID": "reference/extract_all.html",
+    "href": "reference/extract_all.html",
+    "title": "extract_all",
+    "section": "",
+    "text": "RadReportExtractor.extract_all(text: str, include_key: bool = False, **kwargs)\nExtract all sections from the radiology report text.\nThis is the top-level method for the RadReportExtractor() class. It extracts all available sections from the input text and returns them in a RadReport() object.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_all"
+    ]
+  },
+  {
+    "objectID": "reference/extract_all.html#parameters",
+    "href": "reference/extract_all.html#parameters",
+    "title": "extract_all",
+    "section": "Parameters",
+    "text": "Parameters\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text\nrequired\n\n\ninclude_key\nbool\nWhether to include section keys in output, by default False\nFalse\n\n\n**kwargs\n\nParameters passed to all child functions\n{}",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_all"
+    ]
+  },
+  {
+    "objectID": "reference/extract_all.html#returns",
+    "href": "reference/extract_all.html#returns",
+    "title": "extract_all",
+    "section": "Returns",
+    "text": "Returns\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nRadReport\nA RadReport object containing all extracted sections",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_all"
+    ]
+  },
+  {
+    "objectID": "reference/extract_all.html#examples",
+    "href": "reference/extract_all.html#examples",
+    "title": "extract_all",
+    "section": "Examples",
+    "text": "Examples\n\nfrom radreportparser import RadReportExtractor\n\nextractor = RadReportExtractor()\n\ntext = '''\nEMERGENCY MDCT OF THE BRAIN\n\nHISTORY: 25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\n\nTECHNIQUE: Axial helical scan of the brain performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.\n\nCOMPARISON: None.\n\nFINDINGS:\nCerebral parenchyma: Age-appropriate brain volume with normal parenchymal attenuation and gray-white differentiation. No acute large territorial infarction or intraparenchymal hemorrhage identified.\n\nCerebellum and posterior fossa: Normal.\n\nExtraaxial spaces: No extra-axial collection.\n\nVentricles: Normal size. No intraventricular hemorrhage.\n\nMidline shift: None.\n\nBrain herniation: None.\n\nVascular system: Normal.\n\nCalvarium and scalp: No fracture identified.\n\nSkull base, sella and temporomandibular joints (TMJs): Normal.\n\nVisualized orbits, paranasal sinuses and mastoid air cells: Unremarkable.\n\nVisualized upper cervical spine: No fracture identified.\n\nIMPRESSION:\n- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\n'''\n\nreport = extractor.extract_all(text)\nreport\n\nRadReport(title='EMERGENCY MDCT OF THE BRAIN', history='25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.', technique='Axial helical scan of the brain performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.', comparison='None.', findings='Cerebral parenchyma: Age-appropriate brain volume with normal parenchymal attenuation and gray-white differentiation. No acute large territorial infarction or intraparenchymal hemorrhage identified.\\n\\nCerebellum and posterior fossa: Normal.\\n\\nExtraaxial spaces: No extra-axial collection.\\n\\nVentricles: Normal size. No intraventricular hemorrhage.\\n\\nMidline shift: None.\\n\\nBrain herniation: None.\\n\\nVascular system: Normal.\\n\\nCalvarium and scalp: No fracture identified.\\n\\nSkull base, sella and temporomandibular joints (TMJs): Normal.\\n\\nVisualized orbits, paranasal sinuses and mastoid air cells: Unremarkable.\\n\\nVisualized upper cervical spine: No fracture identified.', impression='- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.')\n\n\n\nReport by Element\n\nreport.title\n\n'EMERGENCY MDCT OF THE BRAIN'\n\n\n\nreport.history\n\n'25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.'\n\n\n\nreport.impression\n\n'- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.'\n\n\n\n\nConvert to dictionary\n\nreport.to_dict()\n\n{'title': 'EMERGENCY MDCT OF THE BRAIN',\n 'history': '25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.',\n 'technique': 'Axial helical scan of the brain performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.',\n 'comparison': 'None.',\n 'findings': 'Cerebral parenchyma: Age-appropriate brain volume with normal parenchymal attenuation and gray-white differentiation. No acute large territorial infarction or intraparenchymal hemorrhage identified.\\n\\nCerebellum and posterior fossa: Normal.\\n\\nExtraaxial spaces: No extra-axial collection.\\n\\nVentricles: Normal size. No intraventricular hemorrhage.\\n\\nMidline shift: None.\\n\\nBrain herniation: None.\\n\\nVascular system: Normal.\\n\\nCalvarium and scalp: No fracture identified.\\n\\nSkull base, sella and temporomandibular joints (TMJs): Normal.\\n\\nVisualized orbits, paranasal sinuses and mastoid air cells: Unremarkable.\\n\\nVisualized upper cervical spine: No fracture identified.',\n 'impression': '- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.'}\n\n\n\n\nConvert to JSON\n\nreport.to_json()\n\n'{\"title\": \"EMERGENCY MDCT OF THE BRAIN\", \"history\": \"25-year-old female presents with headache. Physical examination reveals no focal neurological deficits.\", \"technique\": \"Axial helical scan of the brain performed using 2.5-mm (brain) and 1.25-mm (bone) slice thickness with coronal and sagittal reconstructions.\", \"comparison\": \"None.\", \"findings\": \"Cerebral parenchyma: Age-appropriate brain volume with normal parenchymal attenuation and gray-white differentiation. No acute large territorial infarction or intraparenchymal hemorrhage identified.\\\\n\\\\nCerebellum and posterior fossa: Normal.\\\\n\\\\nExtraaxial spaces: No extra-axial collection.\\\\n\\\\nVentricles: Normal size. No intraventricular hemorrhage.\\\\n\\\\nMidline shift: None.\\\\n\\\\nBrain herniation: None.\\\\n\\\\nVascular system: Normal.\\\\n\\\\nCalvarium and scalp: No fracture identified.\\\\n\\\\nSkull base, sella and temporomandibular joints (TMJs): Normal.\\\\n\\\\nVisualized orbits, paranasal sinuses and mastoid air cells: Unremarkable.\\\\n\\\\nVisualized upper cervical spine: No fracture identified.\", \"impression\": \"- No intracranial hemorrhage, acute large territorial infarction, extra-axial collection, midline shift, brain herniation, or skull fracture identified.\"}'",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_all"
+    ]
+  },
+  {
+    "objectID": "reference/extract_comparison.html",
+    "href": "reference/extract_comparison.html",
+    "title": "extract_comparison",
+    "section": "",
+    "text": "RadReportExtractor.extract_comparison(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the comparison section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted comparison section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_comparison"
+    ]
+  },
+  {
+    "objectID": "reference/extract_comparison.html#parameters",
+    "href": "reference/extract_comparison.html#parameters",
+    "title": "extract_comparison",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_comparison"
+    ]
+  },
+  {
+    "objectID": "reference/extract_comparison.html#returns",
+    "href": "reference/extract_comparison.html#returns",
+    "title": "extract_comparison",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted comparison section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_comparison"
+    ]
+  },
+  {
+    "objectID": "reference/RadReport.html",
+    "href": "reference/RadReport.html",
+    "title": "RadReport",
+    "section": "",
+    "text": "RadReport(\n    self,\n    title: Optional[str] = None,\n    history: Optional[str] = None,\n    technique: Optional[str] = None,\n    comparison: Optional[str] = None,\n    findings: Optional[str] = None,\n    impression: Optional[str] = None,\n)\nA dataclass representing a radiology report\nThis class holds the different sections commonly found in radiology reports, including title, clinical history, technique, comparison with prior studies, findings, and impression.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntitle\nstr\nThe title or header section of the report\nNone\n\n\nhistory\nstr\nThe clinical history or indication section\nNone\n\n\ntechnique\nstr\nThe imaging technique or procedure details section\nNone\n\n\ncomparison\nstr\nThe comparison with prior studies section\nNone\n\n\nfindings\nstr\nThe radiological findings or description section\nNone\n\n\nimpression\nstr\nThe impression or conclusion section\nNone\n\n\n\n\n\n\n&gt;&gt;&gt; report = RadReport(\n...     title=\"CT BRAIN WITHOUT CONTRAST\",\n...     history=\"25F with headache\",\n...     findings=\"Normal brain parenchyma\",\n...     impression=\"No acute intracranial abnormality\"\n... )\n&gt;&gt;&gt; report.to_dict()\n{\n    'title': 'CT BRAIN WITHOUT CONTRAST',\n    'history': '25F with headache',\n    'findings': 'Normal brain parenchyma',\n    'impression': 'No acute intracranial abnormality',\n    'technique': None,\n    'comparison': None\n}\n\n\n\n\n\n\nName\nDescription\n\n\n\n\nto_dict\nConvert the RadReport to a dictionary.\n\n\nto_json\nConvert the RadReport to a JSON string.\n\n\n\n\n\nRadReport.to_dict(exclude_none: bool = False)\nConvert the RadReport to a dictionary.\nThis method converts the RadReport object to a dictionary format.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nexclude_none\nbool\nIf True, excludes keys with None values from the output dictionary. If False, includes all keys (default).\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nDict[str, Any]\nA dictionary containing the report sections as key-value pairs.\n\n\n\n\n\n\n&gt;&gt;&gt; report = RadReport(title=\"CT BRAIN\", findings=\"Normal\")\n&gt;&gt;&gt; report.to_dict()\n{'title': 'CT BRAIN', 'history': None, 'technique': None,\n 'comparison': None, 'findings': 'Normal', 'impression': None}\n&gt;&gt;&gt; report.to_dict(exclude_none=True)\n{'title': 'CT BRAIN', 'findings': 'Normal'}\n\n\n\n\nRadReport.to_json(exclude_none: bool = False, **kwargs)\nConvert the RadReport to a JSON string.\nSimilar to pandas DataFrame.to_json(), this method converts the RadReport object to a JSON formatted string.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nexclude_none\nbool\nIf True, excludes keys with None values from the output JSON. If False, includes all keys (default).\nFalse\n\n\n**kwargs\ndict\nAdditional keyword arguments to pass to json.dumps(). Common options include: - indent: int, for pretty printing - sort_keys: bool, to sort keys alphabetically\n{}\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nA JSON string representation of the report.\n\n\n\n\n\n\n&gt;&gt;&gt; report = RadReport(title=\"CT BRAIN\", findings=\"Normal\")\n&gt;&gt;&gt; print(report.to_json(indent=2))\n{\n  \"title\": \"CT BRAIN\",\n  \"history\": null,\n  \"technique\": null,\n  \"comparison\": null,\n  \"findings\": \"Normal\",\n  \"impression\": null\n}\n&gt;&gt;&gt; print(report.to_json(exclude_none=True))\n{\"title\":\"CT BRAIN\",\"findings\":\"Normal\"}",
+    "crumbs": [
+      "Reference",
+      "Report Class",
+      "RadReport"
+    ]
+  },
+  {
+    "objectID": "reference/RadReport.html#parameters",
+    "href": "reference/RadReport.html#parameters",
+    "title": "RadReport",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntitle\nstr\nThe title or header section of the report\nNone\n\n\nhistory\nstr\nThe clinical history or indication section\nNone\n\n\ntechnique\nstr\nThe imaging technique or procedure details section\nNone\n\n\ncomparison\nstr\nThe comparison with prior studies section\nNone\n\n\nfindings\nstr\nThe radiological findings or description section\nNone\n\n\nimpression\nstr\nThe impression or conclusion section\nNone",
+    "crumbs": [
+      "Reference",
+      "Report Class",
+      "RadReport"
+    ]
+  },
+  {
+    "objectID": "reference/RadReport.html#examples",
+    "href": "reference/RadReport.html#examples",
+    "title": "RadReport",
+    "section": "",
+    "text": "&gt;&gt;&gt; report = RadReport(\n...     title=\"CT BRAIN WITHOUT CONTRAST\",\n...     history=\"25F with headache\",\n...     findings=\"Normal brain parenchyma\",\n...     impression=\"No acute intracranial abnormality\"\n... )\n&gt;&gt;&gt; report.to_dict()\n{\n    'title': 'CT BRAIN WITHOUT CONTRAST',\n    'history': '25F with headache',\n    'findings': 'Normal brain parenchyma',\n    'impression': 'No acute intracranial abnormality',\n    'technique': None,\n    'comparison': None\n}",
+    "crumbs": [
+      "Reference",
+      "Report Class",
+      "RadReport"
+    ]
+  },
+  {
+    "objectID": "reference/RadReport.html#methods",
+    "href": "reference/RadReport.html#methods",
+    "title": "RadReport",
+    "section": "",
+    "text": "Name\nDescription\n\n\n\n\nto_dict\nConvert the RadReport to a dictionary.\n\n\nto_json\nConvert the RadReport to a JSON string.\n\n\n\n\n\nRadReport.to_dict(exclude_none: bool = False)\nConvert the RadReport to a dictionary.\nThis method converts the RadReport object to a dictionary format.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nexclude_none\nbool\nIf True, excludes keys with None values from the output dictionary. If False, includes all keys (default).\nFalse\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nDict[str, Any]\nA dictionary containing the report sections as key-value pairs.\n\n\n\n\n\n\n&gt;&gt;&gt; report = RadReport(title=\"CT BRAIN\", findings=\"Normal\")\n&gt;&gt;&gt; report.to_dict()\n{'title': 'CT BRAIN', 'history': None, 'technique': None,\n 'comparison': None, 'findings': 'Normal', 'impression': None}\n&gt;&gt;&gt; report.to_dict(exclude_none=True)\n{'title': 'CT BRAIN', 'findings': 'Normal'}\n\n\n\n\nRadReport.to_json(exclude_none: bool = False, **kwargs)\nConvert the RadReport to a JSON string.\nSimilar to pandas DataFrame.to_json(), this method converts the RadReport object to a JSON formatted string.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\nexclude_none\nbool\nIf True, excludes keys with None values from the output JSON. If False, includes all keys (default).\nFalse\n\n\n**kwargs\ndict\nAdditional keyword arguments to pass to json.dumps(). Common options include: - indent: int, for pretty printing - sort_keys: bool, to sort keys alphabetically\n{}\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nA JSON string representation of the report.\n\n\n\n\n\n\n&gt;&gt;&gt; report = RadReport(title=\"CT BRAIN\", findings=\"Normal\")\n&gt;&gt;&gt; print(report.to_json(indent=2))\n{\n  \"title\": \"CT BRAIN\",\n  \"history\": null,\n  \"technique\": null,\n  \"comparison\": null,\n  \"findings\": \"Normal\",\n  \"impression\": null\n}\n&gt;&gt;&gt; print(report.to_json(exclude_none=True))\n{\"title\":\"CT BRAIN\",\"findings\":\"Normal\"}",
+    "crumbs": [
+      "Reference",
+      "Report Class",
+      "RadReport"
+    ]
+  },
+  {
+    "objectID": "reference/extract_technique.html",
+    "href": "reference/extract_technique.html",
+    "title": "extract_technique",
+    "section": "",
+    "text": "RadReportExtractor.extract_technique(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the technique section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted technique section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_technique"
+    ]
+  },
+  {
+    "objectID": "reference/extract_technique.html#parameters",
+    "href": "reference/extract_technique.html#parameters",
+    "title": "extract_technique",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_technique"
+    ]
+  },
+  {
+    "objectID": "reference/extract_technique.html#returns",
+    "href": "reference/extract_technique.html#returns",
+    "title": "extract_technique",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted technique section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_technique"
+    ]
+  },
+  {
+    "objectID": "reference/extract_impression.html",
+    "href": "reference/extract_impression.html",
+    "title": "extract_impression",
+    "section": "",
+    "text": "RadReportExtractor.extract_impression(\n    text: str,\n    include_key: bool = True,\n    word_boundary: bool = False,\n    flags: Union[re.RegexFlag, int] = re.IGNORECASE,\n    match_strategy: Literal['greedy', 'sequential'] = 'greedy',\n    verbose: bool = True,\n)\nExtract the impression section from the radiology report text.\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nName\nType\nDescription\n\n\n\n\n\nstr\nThe extracted impression section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_impression"
+    ]
+  },
+  {
+    "objectID": "reference/extract_impression.html#parameters",
+    "href": "reference/extract_impression.html#parameters",
+    "title": "extract_impression",
+    "section": "",
+    "text": "Name\nType\nDescription\nDefault\n\n\n\n\ntext\nstr\nThe input radiology report text.\nrequired\n\n\ninclude_key\nbool\nWhether to include the section key in output, by default True\nTrue\n\n\nword_boundary\nbool\nWhether to wrap word boundary \b around the section keys, by default False\nFalse\n\n\nflags\nUnion[re.RegexFlag, int]\nRegex flags to use in pattern matching. For ‘re’ backend: These are directly passed to re.compile() For ‘re2’ backend: These are converted to re2.Options properties By default re.IGNORECASE\nre.IGNORECASE\n\n\nmatch_strategy\n(greedy, sequential)\nStrategy for matching end keys: - “greedy”: Use first matching end key (faster) - “sequential”: Try end keys in order (more precise) Default is “greedy”\n\"greedy\"\n\n\nverbose\nbool\nIf True, prints messages if multiple start matches are found. Default is True.\nTrue",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_impression"
+    ]
+  },
+  {
+    "objectID": "reference/extract_impression.html#returns",
+    "href": "reference/extract_impression.html#returns",
+    "title": "extract_impression",
+    "section": "",
+    "text": "Name\nType\nDescription\n\n\n\n\n\nstr\nThe extracted impression section text. Returns empty string if section not found.",
+    "crumbs": [
+      "Reference",
+      "Extract",
+      "Report Extractor",
+      "extract_impression"
+    ]
+  }
+]
