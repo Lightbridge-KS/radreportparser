@@ -1,6 +1,5 @@
 """radreportparser - Regex-based text parser for common radiology report"""
 
-# Change to import.metadata when minimum python>=3.8
 from importlib.metadata import version as _version
 
 
@@ -13,8 +12,18 @@ from .report import RadReport
 from .section import (
     SectionExtractor
     )
+from ._pattern import _try_import_re2
 
-# __version__ = "0.1.0-alpha.1"
+def is_re2_available() -> bool:
+    """
+    Check if the re2 package is available for use.
+    
+    Returns
+    -------
+    bool
+        True if re2 is installed and available, False otherwise.
+    """
+    return _try_import_re2() is not None
 
 
 __all__ = [
@@ -23,6 +32,7 @@ __all__ = [
     "KeyWord",
     "RadReport",
     "SectionExtractor",
+    "is_re2_available",
     "__version__",
 ]
 

@@ -2,6 +2,8 @@ import re
 from typing import (
     List,
     Tuple,
+    Literal,
+    Union,
 )
 from ._pattern import (
     _pattern_keys,
@@ -14,16 +16,44 @@ def _find_start_position_greedy(
     text: str,
     keys: list[str] | None,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
     verbose: bool = True,
+    backend: Literal["re", "re2"] = "re",
 ) -> tuple[int, int]:
-    """Helper function to find start position of the section"""
+    """Helper function to find start position of the section
     
+    Parameters
+    ----------
+    text : str
+        The input text to search through
+    keys : list[str] | None
+        List of possible section start markers
+    word_boundary : bool, optional
+        Whether to use word boundaries in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
+    verbose : bool, optional
+        If True, prints warnings when multiple start matches are found
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
+    
+    Returns
+    -------
+    tuple[int, int]
+        A tuple containing (start, end) positions.
+        Returns (0, 0) if keys is None.
+        Returns (-1, -1) if no matches found.
+    """
     # Convert text to string
     text = _ensure_string(text)
     
     if keys is None:
         return 0, 0
+        
     # Warn if start pattern appears more than once
     for key in keys:
         x = re.findall(key, text, flags)
@@ -33,7 +63,7 @@ def _find_start_position_greedy(
                 f"Start pattern {key} appear {count} times in text, only the first one will be matched."
             )
 
-    start_match = _pattern_keys(keys, word_boundary, flags).search(text)
+    start_match = _pattern_keys(keys, word_boundary, flags, backend=backend).search(text)
     if not start_match:
         return -1, -1  # Indicate no match found
     return start_match.start(), start_match.end()
@@ -43,7 +73,8 @@ def _find_start_position_greedy_all(
     text: str,
     keys: list[str] | None,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
+    backend: Literal["re", "re2"] = "re",
 ) -> List[Tuple[int, int]]:
     """Helper function to find all start positions of the sections.
 
@@ -55,8 +86,14 @@ def _find_start_position_greedy_all(
         List of possible section start markers
     word_boundary : bool, optional
         Whether to use word boundaries in pattern matching
-    flags : re.RegexFlag, optional
-        Regex flags to use in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Returns
     -------
@@ -71,7 +108,7 @@ def _find_start_position_greedy_all(
     if keys is None:
         return [(0, 0)]
 
-    pattern = _pattern_keys(keys, word_boundary, flags)
+    pattern = _pattern_keys(keys, word_boundary, flags, backend=backend)
     matches = list(pattern.finditer(text))
     if not matches:
         return []
@@ -83,8 +120,9 @@ def _find_start_position_sequential(
     text: str,
     keys: list[str] | None,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
     verbose: bool = True,
+    backend: Literal["re", "re2"] = "re",
 ) -> tuple[int, int]:
     """Find the start position of a section using sequential matching.
 
@@ -99,10 +137,16 @@ def _find_start_position_sequential(
         List of possible start markers, tried in order
     word_boundary : bool, optional
         Whether to use word boundaries in pattern matching
-    flags : re.RegexFlag, optional
-        Regex flags to use in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
     verbose : bool, optional
         If True, prints warning when multiple matches are found
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Returns
     -------
@@ -120,7 +164,7 @@ def _find_start_position_sequential(
     # Try each key in sequence
     for key in keys:
         # Create pattern for single key
-        pattern = _pattern_keys([key], word_boundary, flags)
+        pattern = _pattern_keys([key], word_boundary, flags, backend=backend)
         match = pattern.search(text)
 
         if match:
@@ -142,7 +186,8 @@ def _find_start_position_sequential_all(
     text: str,
     keys: list[str] | None,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
+    backend: Literal["re", "re2"] = "re",
 ) -> List[Tuple[int, int]]:
     """Find all start positions of sections using sequential matching.
 
@@ -157,8 +202,14 @@ def _find_start_position_sequential_all(
         List of possible section start markers to try in order
     word_boundary : bool, optional
         Whether to use word boundaries in pattern matching
-    flags : re.RegexFlag, optional
-        Regex flags to use in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Returns
     -------
@@ -178,7 +229,7 @@ def _find_start_position_sequential_all(
     # Try each key in sequence
     for key in keys:
         # Create pattern for single key
-        pattern = _pattern_keys([key], word_boundary, flags)
+        pattern = _pattern_keys([key], word_boundary, flags, backend=backend)
         
         # Find all matches for this key
         matches = list(pattern.finditer(text))
@@ -198,7 +249,8 @@ def _find_end_position_greedy(
     keys: list[str] | None,
     start_pos: int,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
+    backend: Literal["re", "re2"] = "re",
 ) -> int:
     """Find the end position of a section using greedy matching.
 
@@ -215,8 +267,14 @@ def _find_end_position_greedy(
         Position in text to start searching from
     word_boundary : bool, optional
         Whether to use word boundaries in pattern matching
-    flags : re.RegexFlag, optional
-        Regex flags to use in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Returns
     -------
@@ -228,7 +286,7 @@ def _find_end_position_greedy(
     
     if keys is None:
         return len(text)
-    end_match = _pattern_keys(keys, word_boundary, flags).search(text[start_pos:])
+    end_match = _pattern_keys(keys, word_boundary, flags, backend=backend).search(text[start_pos:])
     return len(text) if not end_match else start_pos + end_match.start()
 
 
@@ -237,7 +295,8 @@ def _find_end_position_sequential(
     keys: list[str] | None,
     start_pos: int,
     word_boundary: bool = False,
-    flags: re.RegexFlag = re.IGNORECASE,
+    flags: Union[re.RegexFlag, int] = re.IGNORECASE,
+    backend: Literal["re", "re2"] = "re",
 ) -> int:
     """Find the end position of a section using sequential matching.
 
@@ -254,8 +313,14 @@ def _find_end_position_sequential(
         Position in text to start searching from
     word_boundary : bool, optional
         Whether to use word boundaries in pattern matching
-    flags : re.RegexFlag, optional
-        Regex flags to use in pattern matching
+    flags : Union[re.RegexFlag, int], optional
+        Regex flags to use in pattern matching.
+        For 're' backend: These are directly passed to re.compile()
+        For 're2' backend: These are converted to re2.Options properties
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Returns
     -------
@@ -263,8 +328,8 @@ def _find_end_position_sequential(
         The ending position in the text
     """
     # Convert text to string
-    text = _ensure_string(text)    
-
+    text = _ensure_string(text)
+    
     if keys is None:
         return len(text)
 
@@ -273,7 +338,7 @@ def _find_end_position_sequential(
     # Try each key in sequence
     for key in keys:
         # Create pattern for single key
-        pattern = _pattern_keys([key], word_boundary, flags)
+        pattern = _pattern_keys([key], word_boundary, flags, backend=backend)
         match = pattern.search(search_text)
 
         if match:

@@ -1,6 +1,6 @@
 import re
 from dataclasses import dataclass
-from typing import List, Optional, Literal
+from typing import List, Optional, Literal, Union
 
 from .keyword import KeyWord
 from .report import RadReport
@@ -59,6 +59,10 @@ class RadReportExtractor:
     keys_footer : list[str], optional
         Keywords that identify report footer content.
         Default uses `KeyWord.FOOTER.value`
+    backend : {"re", "re2"}, optional
+        Regex backend to use:
+        - "re": Standard Python regex engine (default)
+        - "re2": Google's RE2 engine (must be installed)
 
     Methods
     -------
@@ -100,12 +104,21 @@ class RadReportExtractor:
     extractor
     ```
 
+    Using re2 backend:
+
+    ```{python}
+    extractor = RadReportExtractor(backend="re2")
+    findings = extractor.extract_findings(text)
+    findings
+    ```
+
     Notes
     -----
     - Section extraction is case-insensitive by default
     - Returns empty string if section is not found
     - Sections are extracted from their start marker until the next section marker
     - The last matched section continues until end of text
+    - If using the "re2" backend, you must have the re2 package installed
     """
     def __init__(
         self,
@@ -115,7 +128,9 @@ class RadReportExtractor:
         keys_findings: list[str] = KeyWord.FINDINGS.value,
         keys_impression: list[str] = KeyWord.IMPRESSION.value,
         keys_footer: list[str] = KeyWord.FOOTER.value,
+        backend: Literal["re", "re2"] = "re",
     ):
+        self.backend = backend
         self.section_configs = {
             "title": SectionConfig(
                 name="title",
@@ -167,7 +182,7 @@ class RadReportExtractor:
         next_section_keys: list[str] | None,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -185,8 +200,10 @@ class RadReportExtractor:
             Whether to include the section key in output
         word_boundary : bool
             Whether to wrap word boundary around the section keys
-        flags : re.RegexFlag
-            Regex flags to use in pattern matching
+        flags : Union[re.RegexFlag, int]
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
         match_strategy : {"greedy", "sequential"}
             Strategy for matching end keys
         verbose : bool, optional
@@ -205,6 +222,7 @@ class RadReportExtractor:
             word_boundary=word_boundary,
             flags=flags,
             match_strategy=match_strategy,
+            backend=self.backend,
         )
         return extractor.extract(text, verbose=verbose)
 
@@ -214,7 +232,7 @@ class RadReportExtractor:
         section_name: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -371,7 +389,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -385,8 +403,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
@@ -416,7 +437,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -430,8 +451,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
@@ -461,7 +485,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -475,8 +499,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
@@ -506,7 +533,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -520,8 +547,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
@@ -551,7 +581,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -565,8 +595,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
@@ -596,7 +629,7 @@ class RadReportExtractor:
         text: str,
         include_key: bool = True,
         word_boundary: bool = False,
-        flags: re.RegexFlag = re.IGNORECASE,
+        flags: Union[re.RegexFlag, int] = re.IGNORECASE,
         match_strategy: Literal["greedy", "sequential"] = "greedy",
         verbose: bool = True,
     ) -> str:
@@ -610,8 +643,11 @@ class RadReportExtractor:
             Whether to include the section key in output, by default True
         word_boundary : bool, optional
             Whether to wrap word boundary `\b` around the section keys, by default False
-        flags : re.RegexFlag, optional
-            Regex flags to use in pattern matching, by default re.IGNORECASE
+        flags : Union[re.RegexFlag, int], optional
+            Regex flags to use in pattern matching.
+            For 're' backend: These are directly passed to re.compile()
+            For 're2' backend: These are converted to re2.Options properties
+            By default re.IGNORECASE
         match_strategy : {"greedy", "sequential"}, optional
             Strategy for matching end keys:
             - "greedy": Use first matching end key (faster)
