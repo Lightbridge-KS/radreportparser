@@ -111,7 +111,7 @@ The brain shows age-appropriate volume with normal parenchymal attenuation and g
 Before extracting sections, we need to initialize a [`RadReportExtractor()`](`radreportparser.RadReportExtractor`) instance:
 
 ```{python}
-from radreportparser import RadReportExtractor
+from radreportparser import RadReportExtractor, is_re2_available
 
 # Initialize extractor with default configuration using build-in `re` module
 extractor = RadReportExtractor()
@@ -120,7 +120,8 @@ extractor = RadReportExtractor()
 Alternatively, you can use the [Google `re2` module](https://github.com/google/re2) (must be installed separately) for faster regex processing by specifying the `backend` parameter:
 
 ```{python}
-extractor2 = RadReportExtractor(backend="re2")
+if is_re2_available():
+    extractor2 = RadReportExtractor(backend="re2")
 ```
 
 
@@ -148,7 +149,8 @@ report
 
 ```{python}
 # Using `re2` backend
-extractor2.extract_all(report_text)
+if is_re2_available():
+    print(extractor2.extract_all(report_text))
 ```
 
 The extracted sections can be accessed individually:
