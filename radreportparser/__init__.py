@@ -12,7 +12,18 @@ from .report import RadReport
 from .section import (
     SectionExtractor
     )
+from ._pattern import _try_import_re2
 
+def is_re2_available() -> bool:
+    """
+    Check if the re2 package is available for use.
+    
+    Returns
+    -------
+    bool
+        True if re2 is installed and available, False otherwise.
+    """
+    return _try_import_re2() is not None
 
 
 __all__ = [
@@ -21,6 +32,7 @@ __all__ = [
     "KeyWord",
     "RadReport",
     "SectionExtractor",
+    "is_re2_available",
     "__version__",
 ]
 
